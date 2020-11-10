@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:BaseViewPage xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:views="clr-namespace:Recommender.Views;assembly=Recommender"
+                    xmlns:components="clr-namespace:Recommender.Components;assembly=Recommender"
+                    xmlns:models="clr-namespace:Recommender.Models;assembly=Recommender"
+                    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                    NavigationPage.HasNavigationBar="False"
+                    x:Class="Recommender.Views.RecommendationsPage">
+
+    <views:BaseViewPage.PageContent>
+        <StackLayout Margin="0,20,0,0">
+            <CollectionView x:Name="collection">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:MovieModel">
+                        <ContentView>
+                            <!-- <SwipeView Margin="10,0,10,5"> -->
+                            <!-- <SwipeView.RightItems> -->
+                            <!--     <SwipeItems> -->
+                            <!--         <SwipeItem -->
+                            <!--             Text="Ні" -->
+                            <!--             BackgroundColor="Red" /> -->
+                            <!--         <SwipeItem -->
+                            <!--             Text="Можливо" -->
+                            <!--             BackgroundColor="Yellow" /> -->
+                            <!--         <SwipeItem -->
+                            <!--             Text="Так" -->
+                            <!--             BackgroundColor="Green"/> -->
+                            <!--     </SwipeItems> -->
+                            <!-- </SwipeView.RightItems> -->
+
+                            <Frame Padding="0"
+                                   Margin="10,0,10,10"
+                                   CornerRadius="12">
+                                
+                                <Grid RowDefinitions="Auto, Auto, Auto, Auto"
+                                      ColumnDefinitions="Auto, *"
+                                      RowSpacing="5"
+                                     
+                                      BackgroundColor="{StaticResource DarkBackgroundColor}">
+
+                                    <!-- <Grid.GestureRecognizers> -->
+                                    <!--     <SwipeGestureRecognizer Direction="Left"/> -->
+                                    <!-- </Grid.GestureRecognizers> -->
+
+                                    <forms:CachedImage Grid.RowSpan="4"
+                                                       HeightRequest="100"
+                                                       WidthRequest="70"
+                                                       Aspect="AspectFill"
+                                                       Source="{Binding PosterUrl}" />
+
+                                    <Label Grid.Column="1"
+                                           Margin="10,10,10,0"
+                                           FontSize="20"
+                                           FontAttributes="Italic"
+                                           Text="{Binding Title}"
+                                           TextColor="{StaticResource LightTextColor}">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Title}" />
+                                                <Span Text=" (" />
+                                                <Span Text="{Binding Year}" />
+                                                <Span Text=")" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Grid.Column="1"
+                                           Grid.Row="1"
+                                           Margin="10,0"
+                                           HorizontalOptions="Start"
+                                           TextColor="#9C9696">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Drama" />
+                                                <Span Text=" / " />
+                                                <Span Text="History" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Grid.Column="1"
+                                           Grid.Row="1"
+                                           Margin="10,0"
+                                           HorizontalOptions="End"
+                                           Text="131 хв."
+                                           TextColor="#9C9696" />
+
+                                    <Label Grid.Column="1"
+                                           Grid.Row="2"
+                                           Margin="10,0"
+                                           Text="Brad Pitt, Leonardo DiCaprio, Tom Hanks"
+                                           TextColor="#9C9696" />
+
+                                </Grid>
+                            </Frame>
+
+                            <!-- </SwipeView> -->
+
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </views:BaseViewPage.PageContent>
+</views:BaseViewPage>

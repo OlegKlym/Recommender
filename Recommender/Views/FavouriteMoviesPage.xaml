@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:BaseViewPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Recommender.Controls;assembly=Recommender"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:models="clr-namespace:Recommender.Models;assembly=Recommender"
+             xmlns:views="clr-namespace:Recommender.Views;assembly=Recommender"
+             NavigationPage.HasNavigationBar="False"
+             NavigationPage.HasBackButton="False"
+             x:Class="Recommender.Views.FavouriteMoviesPage">
+
+    <views:BaseViewPage.PageContent>
+        <ScrollView x:Name="ScrollView">
+            <Grid RowSpacing="5"
+                  RowDefinitions="Auto, Auto, *, Auto">
+                
+                <!-- progress bar -->
+                <Grid Margin="20,10,20,0" ColumnSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Frame Grid.ColumnSpan="2"
+                           CornerRadius="30"
+                           Padding="0"
+                           BackgroundColor="Transparent">
+                        <ProgressBar x:Name="ProgressBar"
+                                     HeightRequest="10"
+                                     ProgressColor="#DA3F38"
+                                     Progress="0"
+                                     Margin="35,0,0,0"
+                                     ScaleY="4" />
+                    </Frame>
+
+                    <Frame BackgroundColor="White"
+                           WidthRequest="40"
+                           HeightRequest="40"
+                           CornerRadius="20"
+                           Padding="0">
+                        <Label x:Name="ProgressLabel"
+                               Text="0"
+                               TextColor="Black"
+                               FontSize="18"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand" />
+                    </Frame>
+                </Grid>
+
+                <!-- search bar -->
+                <Frame Grid.Row="1"
+                       Padding="0"
+                       CornerRadius="20"
+                       Margin="10,5,10,10"
+                       HeightRequest="50"
+                       HasShadow="False"
+                       BorderColor="White">
+                    <SearchBar x:Name="SearchBar"
+                               PlaceholderColor="#A89B9B"
+                               Placeholder="Введіть назву фільму"
+                               TextChanged="InputView_OnTextChanged"
+                               Unfocused="SearchBar_OnUnfocused"
+                               BackgroundColor="#123347"
+                               CancelButtonColor="White"
+                               TextColor="White" />
+                </Frame>
+
+                <!-- selected movies -->
+                <controls:GridView x:Name="SelectedMoviesList"
+                                   Grid.Row="2"
+                                   Margin="10,0"
+                                   VerticalOptions="Start"
+                                   ColumnsCount="3">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:MovieModel">
+                            <Frame CornerRadius="15"
+                                   Padding="0"
+                                   WidthRequest="105"
+                                   HasShadow="False">
+
+                                <Grid>
+                                    <forms:CachedImage Source="{Binding PosterUrl}"
+                                                       DownsampleToViewSize="True"
+                                                       Aspect="AspectFill"
+                                                       HorizontalOptions="Fill"
+                                                       VerticalOptions="Fill" />
+
+                                    <ImageButton HorizontalOptions="End"
+                                                 VerticalOptions="Start"
+                                                 Margin="5"
+                                                 WidthRequest="40"
+                                                 HeightRequest="40"
+                                                 CornerRadius="20"
+                                                 Source="basket.png"
+                                                 Aspect="Fill"
+                                                 Clicked="ImageButton_OnClicked"
+                                                 BackgroundColor="Transparent" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </controls:GridView>
+
+                <!-- suggestions List -->
+                <StackLayout x:Name="SuggectionsComponent" 
+                             Grid.Row="1"
+                             Grid.RowSpan="2"   
+                             IsVisible="False"
+                             Margin="10,40,10,0">
+
+                    <StackLayout x:Name="SuggestionsList"
+                                 Padding="15,15,15,10"
+                                 VerticalOptions="Start"
+                                 BackgroundColor="#123347">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="models:MovieModel">
+                                <Grid RowSpacing="10" 
+                                      ColumnSpacing="10"
+                                      RowDefinitions="1, *"
+                                      ColumnDefinitions="Auto,Auto"
+                                      Margin="0,0,0,5">
+                                    
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                                    </Grid.GestureRecognizers>
+                                                                        
+                                    <BoxView Grid.ColumnSpan="2"
+                                             BackgroundColor="DarkGray"/>
+                                    
+                                    <forms:CachedImage Grid.Row="1" 
+                                                       HeightRequest="80"
+                                                       WidthRequest="48"
+                                                       DownsampleToViewSize="True"
+                                                       Aspect="AspectFill"
+                                                       Source="{Binding PosterUrl}" />
+
+                                    <StackLayout Grid.Row="1" 
+                                                 Grid.Column="1" 
+                                                 Spacing="0"
+                                                 VerticalOptions="Center">
+                                        
+                                        <Label FontSize="20"
+                                               FontAttributes="Italic"
+                                               Text="{Binding Title}"
+                                               TextColor="{StaticResource LightTextColor}"/>
+
+                                        <Label Text="{Binding Year}"
+                                               TextColor="#9C9696" />
+                                    
+                                        <Label Text="Brad Pitt, Leonardo DiCaprio, Tom Hanks"
+                                               TextColor="#9C9696" />
+                                    </StackLayout>
+                                   
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    
+                    <Frame HeightRequest="20" 
+                           BackgroundColor="#123347"
+                           Margin="0,-15,0,0"
+                           Padding="0"
+                           CornerRadius="15"/>
+                </StackLayout>
+
+                <Button x:Name="ConfirmButton"
+                        Grid.Row="3"
+                        IsEnabled="True"
+                        Text="Згенерувати рекомендації"
+                        Style="{StaticResource ConfirmButton}"
+                        Clicked="ConfirmButton_OnClicked"
+                        Margin="20" />
+            </Grid>
+        </ScrollView>
+    </views:BaseViewPage.PageContent>
+</views:BaseViewPage>

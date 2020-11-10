@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:BaseViewPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:Recommender.Views;assembly=Recommender"
+             xmlns:components="clr-namespace:Recommender.Components;assembly=Recommender"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Recommender.Views.ProfilePage">
+    
+    <views:BaseViewPage.PageContent>
+        <Grid VerticalOptions="Start">
+            <components:LogoView Text="Профіль" 
+                                 HeightRequest="30"
+                                 Margin="25,15,25,0"/>
+        </Grid>
+    </views:BaseViewPage.PageContent>
+</views:BaseViewPage>

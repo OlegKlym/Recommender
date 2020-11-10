@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<views:BaseViewPage xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:components="clr-namespace:Recommender.Components;assembly=Recommender"
+                    xmlns:views="clr-namespace:Recommender.Views;assembly=Recommender"
+                    NavigationPage.HasNavigationBar="False"
+                    x:Class="Recommender.Views.LoginPage">
+
+    <views:BaseViewPage.PageContent>
+        <ScrollView>
+            <Grid RowSpacing="0" ColumnSpacing="0"
+                  RowDefinitions="70,*,Auto,*,Auto"
+                  ColumnDefinitions="*,*">
+
+                <components:LogoView x:Name="LogoTitle"
+                                     Grid.ColumnSpan="2"
+                                     Text="Рекомендер"
+                                     HorizontalOptions="Start"
+                                     Margin="15,15,15,0" />
+
+                <StackLayout x:Name="LoginGroup"
+                             Grid.Row="2"
+                             Grid.ColumnSpan="2"
+                             VerticalOptions="Center"
+                             Spacing="10">
+
+                    <Label HorizontalOptions="CenterAndExpand"
+                           Margin="0,0,0,10"
+                           Style="{StaticResource TitleLabel}"
+                           Text="Увійти" />
+
+                    <Frame Padding="0,-1"
+                           Margin="40,0"
+                           CornerRadius="25"
+                           IsClippedToBounds="true">
+                        <Entry
+                            Visual="Material"
+                            Placeholder="Email"
+                            Style="{StaticResource DefaultEntry}" />
+                    </Frame>
+
+                    <Frame Padding="0,-1"
+                           Margin="40,0"
+                           CornerRadius="25"
+                           IsClippedToBounds="true">
+                        <Entry
+                            Visual="Material"
+                            Placeholder="Пароль"
+                            IsPassword="True"
+                            Style="{StaticResource DefaultEntry}" />
+                    </Frame>
+
+                    <Button HorizontalOptions="FillAndExpand"
+                            Margin="40,20"
+                            Style="{StaticResource ConfirmButton}"
+                            Text="Все, впускайте!"
+                            Clicked="Button_OnClicked" />
+                </StackLayout>
+
+                <Label Grid.Row="4"
+                       HorizontalOptions="StartAndExpand"
+                       VerticalOptions="EndAndExpand"
+                       Margin="15,0,0,25"
+                       Style="{StaticResource LinkLabel}"
+                       Text="Забули пароль ?" />
+
+                <Label Grid.Row="4"
+                       Grid.Column="1"
+                       HorizontalOptions="EndAndExpand"
+                       VerticalOptions="EndAndExpand"
+                       Margin="0,0,15,25"
+                       Style="{StaticResource LinkLabel}"
+                       Text="Зареєструватись" />
+            </Grid>
+        </ScrollView>
+    </views:BaseViewPage.PageContent>
+
+</views:BaseViewPage>

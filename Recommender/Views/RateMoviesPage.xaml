@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:BaseViewPage xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:views="clr-namespace:Recommender.Views;assembly=Recommender"
+                    xmlns:components="clr-namespace:Recommender.Components;assembly=Recommender"
+                    xmlns:models="clr-namespace:Recommender.Models;assembly=Recommender"
+                    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                    NavigationPage.HasNavigationBar="False"
+                    x:Class="Recommender.Views.RateMoviesPage">
+
+    <views:BaseViewPage.PageContent>
+        <Grid RowDefinitions="50, 350, *"
+              RowSpacing="0">
+            <CollectionView x:Name="carousel" 
+                            Grid.Row="1"
+                            VerticalOptions="Center"
+                            Scrolled="Carousel_OnScrolled"
+                            ItemsUpdatingScrollMode="KeepScrollOffset">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       SnapPointsType="MandatorySingle"
+                                       SnapPointsAlignment="Center" />
+                </CollectionView.ItemsLayout>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:MovieModel">
+                        <ContentView>
+                            <StackLayout>
+                                <Frame Padding="0"
+                                       CornerRadius="20"
+                                       HeightRequest="350"
+                                       WidthRequest="250"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       Margin="20,0"
+                                       BackgroundColor="Transparent">
+                                    <forms:CachedImage Source="{Binding PosterUrl}"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center"
+                                                       Aspect="Fill" />
+                                </Frame>
+                            </StackLayout>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+            <StackLayout x:Name="rates" 
+                         Grid.Row="2"
+                         Orientation="Horizontal"
+                         Margin="0,20,0,10"
+                         Spacing="20"
+                         VerticalOptions="Start"
+                         HorizontalOptions="CenterAndExpand">
+                <Button Text="-" BackgroundColor="#D7413C" CornerRadius="40" WidthRequest="60" HeightRequest="60" TextColor="White" BorderColor="White" BorderWidth="2" FontSize="25"/>
+                <Button Text="=" BackgroundColor="Orange" CornerRadius="40" WidthRequest="60" HeightRequest="60" TextColor="White" BorderColor="White" BorderWidth="2" FontSize="25"/>
+                <Button Text="+" BackgroundColor="Green" CornerRadius="40" WidthRequest="60" HeightRequest="60" TextColor="White" BorderColor="White" BorderWidth="2" FontSize="25"/>
+            </StackLayout>
+        </Grid>
+    </views:BaseViewPage.PageContent>
+</views:BaseViewPage>

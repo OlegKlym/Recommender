@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:BaseViewPage xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:components="clr-namespace:Recommender.Components;assembly=Recommender"
+                    xmlns:views="clr-namespace:Recommender.Views;assembly=Recommender"
+                    NavigationPage.HasNavigationBar="False"
+                    x:Class="Recommender.Views.OnboardingPage">
+
+    <views:BaseViewPage.PageContent>
+        <Grid RowDefinitions="70,*,Auto,*,Auto">
+
+            <components:LogoView HorizontalOptions="Start"
+                                 Text="Рекомендер"
+                                 Margin="15,15,15,0" />
+
+            <Frame Grid.Row="2"
+                   Padding="0"
+                   CornerRadius="50"
+                   Margin="20,0">
+
+                <StackLayout Spacing="0">
+                    <BoxView HeightRequest="20"
+                             BackgroundColor="Black" />
+
+                    <Grid VerticalOptions="Center"
+                          HeightRequest="400">
+                        <MediaElement x:Name="video"
+                                      AutoPlay="True"
+                                      Source="ms-appx:///video1597151024.mp4"
+                                      Volume="1.0"
+                                      IsLooping="True"
+                                      Aspect="AspectFill"
+                                      VerticalOptions="Fill"
+                                      HorizontalOptions="Fill" />
+                    </Grid>
+
+                    <BoxView HeightRequest="60"
+                             Margin="0,-60,0,0"
+                             BackgroundColor="Black" />
+                </StackLayout>
+            </Frame>
+
+            <Button Grid.Row="4"
+                    Text="Знайди своє кіно!"
+                    Margin="20,0,20,20"
+                    VerticalOptions="End"
+                    Style="{StaticResource ConfirmButton}"
+                    Clicked="Button_OnClicked" />
+
+        </Grid>
+    </views:BaseViewPage.PageContent>
+</views:BaseViewPage>
