@@ -1,11 +1,13 @@
 ﻿using Android.Content;
+using Recommender.Droid.Renderers;
 using Xamarin.Forms;
-using Xamarin.Forms.Material.Android;
 using Xamarin.Forms.Platform.Android;
 
+
+[assembly: ExportRenderer(typeof(Entry), typeof(DefaultEntryRenderer))]
 namespace Recommender.Droid.Renderers
 {
-    public class DefaultEntryRenderer : MaterialEntryRenderer
+    public class DefaultEntryRenderer : EntryRenderer
     {
         public DefaultEntryRenderer(Context context) : base(context)
         {
@@ -17,8 +19,8 @@ namespace Recommender.Droid.Renderers
 
             if (Control != null)
             {
-                Control.EditText.Background = null;
-                Control.EditText.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                Control.Background = null;
+                Control.SetBackgroundColor(Android.Graphics.Color.Transparent);
             }
         }
     }

@@ -1,84 +1,52 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Recommender.Models;
-using Recommender.Services;
+using Recommender.Core.Models;
+using Recommender.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Recommender.Views
+namespace Recommender.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RateMoviesPage : BaseViewPage
     {
-        private List<MovieModel> _movies;
-        private ScrollEnum _scrollStatus  = (ScrollEnum)1;
-        
+        public List<MovieModel> Movies { get; set; }
+
+        private int _currentItemIndex = 0;
+
         public RateMoviesPage()
         {
             InitializeComponent();
-
-            ConstructCarousel();
-            
-            carousel.ItemsSource = _movies;
         }
 
-        protected override void OnAppearing()
+        private void ImageButton_OnClicked(object sender, EventArgs e)
         {
-            base.OnAppearing();
-            
-            ScrollToBegin();
+            if (_currentItemIndex < Movies.Count)
+            {
+                carousel.ScrollTo(Movies[_currentItemIndex], position: ScrollToPosition.Center, animate: true);
+            }
         }
 
-        private void ConstructCarousel()
-        {
-            _movies = new List<MovieModel>{ new MovieModel()} ;
-            _movies.AddRange(DataService.GetMovies());
-            _movies.Add(new MovieModel());
-        }
-        
         private void Carousel_OnScrolled(object sender, ItemsViewScrolledEventArgs e)
         {
-            if (_scrollStatus == ScrollEnum.EndScrolling)
-            {
-                _scrollStatus = ScrollEnum.StartScrolling;
-                
-                if (_scrollStatus == ScrollEnum.StartScrolling)
-                {
-                    rates.FadeTo(1, 500, Easing.Linear);    
-                }
-            }
-            else
-            {
-                if (_scrollStatus == ScrollEnum.StartScrolling)
-                {
-                    rates.FadeTo(0, 100, Easing.Linear);    
-                }
-
-                _scrollStatus++;
-            }
+            _currentItemIndex = e.CenterItemIndex;
         }
 
-        private void ScrollToBegin()
+        private void Carousel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Device.BeginInvokeOnMainThread(() =>
+            if(e.PropertyName == ItemsView.ItemsSourceProperty.PropertyName &&
+                sender is CollectionView collectionView &&
+                collectionView.ItemsSource != null)
             {
-                try
-                {
-                    carousel.ScrollTo(_movies[1], position: ScrollToPosition.Center);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            });
+                Movies = (collectionView.ItemsSource as IEnumerable<MovieModel>).ToList();
+            }
         }
-    }
 
-    public enum ScrollEnum
-    {
-        StartScrolling = 1,
-        ContinueScrolling = 2,
-        EndScrolling = 3
+        private void ImageButton_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+
+        }
     }
 }

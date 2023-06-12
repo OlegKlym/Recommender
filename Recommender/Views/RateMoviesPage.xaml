@@ -2,60 +2,111 @@
 <views:BaseViewPage xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:views="clr-namespace:Recommender.Views;assembly=Recommender"
+                    xmlns:viewModels="clr-namespace:Recommender.ViewModels;assembly=Recommender"
                     xmlns:components="clr-namespace:Recommender.Components;assembly=Recommender"
-                    xmlns:models="clr-namespace:Recommender.Models;assembly=Recommender"
+                    xmlns:models="clr-namespace:Recommender.Core.Models;assembly=Recommender.Core"
                     xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-                    NavigationPage.HasNavigationBar="False"
-                    x:Class="Recommender.Views.RateMoviesPage">
+                    xmlns:controls="clr-namespace:Recommender.Controls;assembly=Recommender"
+                    x:DataType="viewModels:RateMoviesPageModel"
+                    x:Class="Recommender.Pages.RateMoviesPage"
+                    x:Name="RateMoviesPageName">
 
     <views:BaseViewPage.PageContent>
-        <Grid RowDefinitions="50, 350, *"
+        <Grid RowDefinitions="15, *"
               RowSpacing="0">
-            <CollectionView x:Name="carousel" 
+            <CollectionView x:Name="carousel"
                             Grid.Row="1"
                             VerticalOptions="Center"
-                            Scrolled="Carousel_OnScrolled"
-                            ItemsUpdatingScrollMode="KeepScrollOffset">
+                            ItemsSource="{Binding Recommendations}"
+                            PropertyChanged="Carousel_PropertyChanged"
+                            Scrolled="Carousel_OnScrolled">
+
+                <CollectionView.Header>
+                    <Grid WidthRequest="30"/>
+                </CollectionView.Header>
+
+                <CollectionView.Footer>
+                    <Grid WidthRequest="30"/>
+                </CollectionView.Footer>
+
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal"
                                        SnapPointsType="MandatorySingle"
                                        SnapPointsAlignment="Center" />
                 </CollectionView.ItemsLayout>
-                
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:MovieModel">
-                        <ContentView>
-                            <StackLayout>
+
+                         <Grid RowDefinitions="*, Auto, Auto"
+                               RowSpacing="0">
+
+                             <Grid.GestureRecognizers>
+                                 <TapGestureRecognizer/>
+                             </Grid.GestureRecognizers>
+
                                 <Frame Padding="0"
-                                       CornerRadius="20"
-                                       HeightRequest="350"
-                                       WidthRequest="250"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       Margin="20,0"
-                                       BackgroundColor="Transparent">
-                                    <forms:CachedImage Source="{Binding PosterUrl}"
-                                                       HorizontalOptions="Center"
-                                                       VerticalOptions="Center"
-                                                       Aspect="Fill" />
+                                        CornerRadius="20"
+                                        WidthRequest="300"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        Margin="20,20,20,0"
+                                        BackgroundColor="Transparent">
+                                    <forms:CachedImage x:Name="posterImage"
+                                                        Source="{Binding Image}"
+                                                        Aspect="AspectFill" />
                                 </Frame>
-                            </StackLayout>
-                        </ContentView>
+
+                                <StackLayout x:Name="rates"
+                                                Grid.Row="1"
+                                                Orientation="Horizontal"
+                                                Spacing="25"
+                                                VerticalOptions="Start"
+                                                HorizontalOptions="CenterAndExpand">
+
+                                    <ImageButton BackgroundColor="Green" 
+                                                 Source="like.png"
+                                                 Style="{StaticResource RateButton}"
+                                                 Clicked="ImageButton_OnClicked"
+                                                 PropertyChanged="ImageButton_PropertyChanged"
+                                                 Command="{Binding BindingContext.AddToLikedMovieCommand,
+                                                            Source={x:Reference RateMoviesPageName}}"
+                                                 CommandParameter="{Binding}"/>
+                                        
+                                    <ImageButton BackgroundColor="Orange" 
+                                                 Source="sceptic.png"
+                                                 Style="{StaticResource RateButton}"
+                                                 Clicked="ImageButton_OnClicked"
+                                                 Command="{Binding BindingContext.AddToNeutralMovieCommand,
+                                                            Source={x:Reference RateMoviesPageName}}"
+                                                 CommandParameter="{Binding}"/>
+                                        
+                                    <ImageButton BackgroundColor="#D7413C" 
+                                                 Source="dislike.png"
+                                                 Style="{StaticResource RateButton}"
+                                                 Clicked="ImageButton_OnClicked"
+                                                 Command="{Binding BindingContext.AddToDislikedMovieCommand,
+                                                            Source={x:Reference RateMoviesPageName}}"
+                                                 CommandParameter="{Binding}"/>
+                                </StackLayout>
+
+                                <Label Grid.Row="2"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        Margin="0,20,0,25"
+                                        Style="{StaticResource LinkLabel}"
+                                        Text="Не переглянуто">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.AddToNotSeenMovieCommand,
+                                                                            Source={x:Reference RateMoviesPageName}}"
+                                                              CommandParameter="{Binding}"
+                                                              Tapped="ImageButton_OnClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            
-            <StackLayout x:Name="rates" 
-                         Grid.Row="2"
-                         Orientation="Horizontal"
-                         Margin="0,20,0,10"
-                         Spacing="20"
-                         VerticalOptions="Start"
-                         HorizontalOptions="CenterAndExpand">
-                <Button Text="-" BackgroundColor="#D7413C" CornerRadius="40" WidthRequest="60" HeightRequest="60" TextColor="White" BorderColor="White" BorderWidth="2" FontSize="25"/>
-                <Button Text="=" BackgroundColor="Orange" CornerRadius="40" WidthRequest="60" HeightRequest="60" TextColor="White" BorderColor="White" BorderWidth="2" FontSize="25"/>
-                <Button Text="+" BackgroundColor="Green" CornerRadius="40" WidthRequest="60" HeightRequest="60" TextColor="White" BorderColor="White" BorderWidth="2" FontSize="25"/>
-            </StackLayout>
         </Grid>
     </views:BaseViewPage.PageContent>
 </views:BaseViewPage>

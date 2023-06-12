@@ -1,5 +1,6 @@
 ﻿using Foundation;
 using UIKit;
+using Xamarin.Forms;
 
 namespace Recommender.iOS
 {
@@ -9,7 +10,13 @@ namespace Recommender.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
-            Xamarin.Forms.Forms.Init();
+            Forms.SetFlags(new string[]
+            {
+                "MediaElement_Experimental",
+                "Brush_Experimental",
+                "SwipeView_Experimental"
+            });
+            Forms.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
