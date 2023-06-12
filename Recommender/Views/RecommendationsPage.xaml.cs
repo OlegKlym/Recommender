@@ -1,10 +1,7 @@
-using System.Collections.Generic;
-using Recommender.Models;
-using Recommender.Services;
-using Xamarin.Forms;
+using Recommender.Views;
 using Xamarin.Forms.Xaml;
 
-namespace Recommender.Views
+namespace Recommender.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RecommendationsPage : BaseViewPage
@@ -12,15 +9,6 @@ namespace Recommender.Views
         public RecommendationsPage()
         {
             InitializeComponent();
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            var movies = DataService.GetMovies();
-
-            collection.ItemsSource = movies;
         }
     }
 }

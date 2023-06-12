@@ -3,74 +3,68 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:components="clr-namespace:Recommender.Components;assembly=Recommender"
                     xmlns:views="clr-namespace:Recommender.Views;assembly=Recommender"
-                    NavigationPage.HasNavigationBar="False"
-                    x:Class="Recommender.Views.LoginPage">
+                    xmlns:viewModels="clr-namespace:Recommender.ViewModels;assembly=Recommender"
+                    xmlns:localizations="clr-namespace:Recommender.Resources.Localizations;assembly=Recommender"
+                    x:Class="Recommender.Pages.LoginPage"
+                    x:DataType="viewModels:LoginPageModel">
 
     <views:BaseViewPage.PageContent>
         <ScrollView>
-            <Grid RowSpacing="0" ColumnSpacing="0"
+            <Grid RowSpacing="0"
+                  ColumnSpacing="0"
                   RowDefinitions="70,*,Auto,*,Auto"
                   ColumnDefinitions="*,*">
 
                 <components:LogoView x:Name="LogoTitle"
                                      Grid.ColumnSpan="2"
-                                     Text="Рекомендер"
+                                     Text="{x:Static localizations:AppResources.Logo}"
                                      HorizontalOptions="Start"
                                      Margin="15,15,15,0" />
 
-                <StackLayout x:Name="LoginGroup"
-                             Grid.Row="2"
+                <StackLayout Grid.Row="2"
                              Grid.ColumnSpan="2"
                              VerticalOptions="Center"
-                             Spacing="10">
+                             Spacing="15">
 
                     <Label HorizontalOptions="CenterAndExpand"
                            Margin="0,0,0,10"
                            Style="{StaticResource TitleLabel}"
-                           Text="Увійти" />
+                           Text="{x:Static localizations:AppResources.LoginTitle}" />
 
-                    <Frame Padding="0,-1"
-                           Margin="40,0"
-                           CornerRadius="25"
-                           IsClippedToBounds="true">
-                        <Entry
-                            Visual="Material"
-                            Placeholder="Email"
-                            Style="{StaticResource DefaultEntry}" />
-                    </Frame>
+                    <components:EntryFrame Margin="40,0"
+                                           EntryPlaceholder="{x:Static localizations:AppResources.LoginEmail}"
+                                           EntryText="{Binding Email, Mode=TwoWay}"/>
 
-                    <Frame Padding="0,-1"
-                           Margin="40,0"
-                           CornerRadius="25"
-                           IsClippedToBounds="true">
-                        <Entry
-                            Visual="Material"
-                            Placeholder="Пароль"
-                            IsPassword="True"
-                            Style="{StaticResource DefaultEntry}" />
-                    </Frame>
+                    <components:EntryFrame Margin="40,0"
+                                           EntryPlaceholder="{x:Static localizations:AppResources.LoginPassword}"
+                                           IsPasswordEntry="True"
+                                           EntryText="{Binding Password, Mode=TwoWay}"/>
 
-                    <Button HorizontalOptions="FillAndExpand"
-                            Margin="40,20"
+                    <Button Margin="40,20"
                             Style="{StaticResource ConfirmButton}"
-                            Text="Все, впускайте!"
-                            Clicked="Button_OnClicked" />
+                            Text="{x:Static localizations:AppResources.LoginContinue}"
+                            Command="{Binding ContinueCommand}"/>
                 </StackLayout>
 
                 <Label Grid.Row="4"
-                       HorizontalOptions="StartAndExpand"
-                       VerticalOptions="EndAndExpand"
-                       Margin="15,0,0,25"
+                       Margin="25,0,0,25"
                        Style="{StaticResource LinkLabel}"
-                       Text="Забули пароль ?" />
+                       Text="{x:Static localizations:AppResources.LoginForgotPassword}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToForgotPasswordCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
 
                 <Label Grid.Row="4"
                        Grid.Column="1"
-                       HorizontalOptions="EndAndExpand"
-                       VerticalOptions="EndAndExpand"
-                       Margin="0,0,15,25"
+                       Margin="0,0,25,25"
+                       HorizontalOptions="End"
                        Style="{StaticResource LinkLabel}"
-                       Text="Зареєструватись" />
+                       Text="{x:Static localizations:AppResources.LoginSignUp}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer  Command="{Binding GoToSignUpCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
             </Grid>
         </ScrollView>
     </views:BaseViewPage.PageContent>

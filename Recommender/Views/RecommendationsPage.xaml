@@ -2,105 +2,127 @@
 <views:BaseViewPage xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:views="clr-namespace:Recommender.Views;assembly=Recommender"
-                    xmlns:components="clr-namespace:Recommender.Components;assembly=Recommender"
-                    xmlns:models="clr-namespace:Recommender.Models;assembly=Recommender"
+                    xmlns:viewModels="clr-namespace:Recommender.ViewModels;assembly=Recommender"
+                    xmlns:models="clr-namespace:Recommender.Core.Models;assembly=Recommender.Core"
                     xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-                    NavigationPage.HasNavigationBar="False"
-                    x:Class="Recommender.Views.RecommendationsPage">
+                    x:Class="Recommender.Pages.RecommendationsPage"
+                    x:DataType="viewModels:RecommendationsViewModel"
+                    x:Name="page">
 
-    <views:BaseViewPage.PageContent>
-        <StackLayout Margin="0,20,0,0">
-            <CollectionView x:Name="collection">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:MovieModel">
-                        <ContentView>
-                            <!-- <SwipeView Margin="10,0,10,5"> -->
-                            <!-- <SwipeView.RightItems> -->
-                            <!--     <SwipeItems> -->
-                            <!--         <SwipeItem -->
-                            <!--             Text="Ні" -->
-                            <!--             BackgroundColor="Red" /> -->
-                            <!--         <SwipeItem -->
-                            <!--             Text="Можливо" -->
-                            <!--             BackgroundColor="Yellow" /> -->
-                            <!--         <SwipeItem -->
-                            <!--             Text="Так" -->
-                            <!--             BackgroundColor="Green"/> -->
-                            <!--     </SwipeItems> -->
-                            <!-- </SwipeView.RightItems> -->
+    <views:BaseViewPage.Resources>
+        <DataTemplate x:Key="RecommendationItemTemplate"
+                      x:DataType="models:MovieModel">
+               <Grid Margin="10"
+                     CompressedLayout.IsHeadless="True">
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BindingContext.OpenMovieDetailsCommand, Source={x:Reference page}}"
+                                                CommandParameter="{Binding}"/>
+                    </Grid.GestureRecognizers>
+
+                    <Frame Padding="0,-15,0,-10"
+                            Margin="15,5,10,5"
+                            CornerRadius="12"
+                            HasShadow="False"
+                            BackgroundColor="{StaticResource DarkBackgroundColor}">
+
+                        <Grid ColumnDefinitions="100,*">
 
                             <Frame Padding="0"
-                                   Margin="10,0,10,10"
-                                   CornerRadius="12">
-                                
-                                <Grid RowDefinitions="Auto, Auto, Auto, Auto"
-                                      ColumnDefinitions="Auto, *"
-                                      RowSpacing="5"
-                                     
-                                      BackgroundColor="{StaticResource DarkBackgroundColor}">
-
-                                    <!-- <Grid.GestureRecognizers> -->
-                                    <!--     <SwipeGestureRecognizer Direction="Left"/> -->
-                                    <!-- </Grid.GestureRecognizers> -->
-
-                                    <forms:CachedImage Grid.RowSpan="4"
-                                                       HeightRequest="100"
-                                                       WidthRequest="70"
-                                                       Aspect="AspectFill"
-                                                       Source="{Binding PosterUrl}" />
-
-                                    <Label Grid.Column="1"
-                                           Margin="10,10,10,0"
-                                           FontSize="20"
-                                           FontAttributes="Italic"
-                                           Text="{Binding Title}"
-                                           TextColor="{StaticResource LightTextColor}">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="{Binding Title}" />
-                                                <Span Text=" (" />
-                                                <Span Text="{Binding Year}" />
-                                                <Span Text=")" />
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-
-                                    <Label Grid.Column="1"
-                                           Grid.Row="1"
-                                           Margin="10,0"
-                                           HorizontalOptions="Start"
-                                           TextColor="#9C9696">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="Drama" />
-                                                <Span Text=" / " />
-                                                <Span Text="History" />
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-
-                                    <Label Grid.Column="1"
-                                           Grid.Row="1"
-                                           Margin="10,0"
-                                           HorizontalOptions="End"
-                                           Text="131 хв."
-                                           TextColor="#9C9696" />
-
-                                    <Label Grid.Column="1"
-                                           Grid.Row="2"
-                                           Margin="10,0"
-                                           Text="Brad Pitt, Leonardo DiCaprio, Tom Hanks"
-                                           TextColor="#9C9696" />
-
-                                </Grid>
+                                    HeightRequest="140"
+                                    HasShadow="False"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Center"
+                                    Margin="5,10,0,5"
+                                    CornerRadius="15">
+                                <forms:CachedImage Aspect="AspectFill"
+                                                   Source="{Binding Image}" />
                             </Frame>
 
-                            <!-- </SwipeView> -->
+                            <StackLayout Grid.Column="1"
+                                        CompressedLayout.IsHeadless="True"
+                                        VerticalOptions="CenterAndExpand">
 
-                        </ContentView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
+                                <Label Margin="10,10,10,0"
+                                        FontSize="20"
+                                        FontAttributes="Italic"
+                                        TextColor="{StaticResource LightTextColor}">
+                                     <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Title}" />
+                                            <Span Text=" (" />
+                                            <Span Text="{Binding Year}" />
+                                            <Span Text=")" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <Label Margin="10,0"
+                                        FontSize="14"
+                                        HorizontalOptions="Start"
+                                        TextColor="#9C9696">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding MainGenre}" />
+                                            <Span Text=" / " />
+                                            <Span Text="{Binding AdditionalGenre}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                 <Label Margin="10,0"
+                                        FontSize="14"
+                                        HorizontalOptions="Start"
+                                        TextColor="#9C9696">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Популярність: " />
+                                            <Span Text="{Binding Popularity}" />
+                                            <Span Text=" оцінок" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                 <Label Margin="10,0"
+                                        FontSize="14"
+                                        HorizontalOptions="Start"
+                                        TextColor="#9C9696">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Середня оцінка: " />
+                                            <Span Text="{Binding AverageRating}" />
+                                            <Span Text="/10" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </Grid>
+        </DataTemplate>
+    </views:BaseViewPage.Resources>
+    
+    <views:BaseViewPage.PageContent>
+        <Grid CompressedLayout.IsHeadless="True">
+            <CollectionView x:Name="collection"
+                            ItemsSource="{Binding Recommendations}"
+                            ItemTemplate="{StaticResource RecommendationItemTemplate}"/>
+
+            <AbsoluteLayout VerticalOptions="End"
+                            HorizontalOptions="End"
+                            HeightRequest="80"
+                            WidthRequest="80">
+
+                 <ImageButton BackgroundColor="Orange" 
+                              Source="refresh.png"
+                              Style="{StaticResource RateButton}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              Command="{Binding RefreshMoviesCommand}"
+                              AbsoluteLayout.LayoutBounds="0.9, 0.9, 1, 1"
+                              AbsoluteLayout.LayoutFlags="All"/>
+
+            </AbsoluteLayout>
+        </Grid>
     </views:BaseViewPage.PageContent>
 </views:BaseViewPage>

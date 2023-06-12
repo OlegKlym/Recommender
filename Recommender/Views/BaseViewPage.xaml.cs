@@ -1,12 +1,11 @@
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Recommender.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    [ContentProperty(nameof(PageContent))]
     public partial class BaseViewPage : ContentPage
     {
-        private BindableProperty PageContentProperty =
+        private readonly BindableProperty PageContentProperty =
             BindableProperty.Create(nameof(PageContent), typeof(View), typeof(ContentPage));
         
         public BaseViewPage()

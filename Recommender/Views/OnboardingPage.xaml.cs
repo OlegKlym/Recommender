@@ -1,8 +1,7 @@
-using System;
-using Xamarin.Forms;
+using Recommender.Views;
 using Xamarin.Forms.Xaml;
 
-namespace Recommender.Views
+namespace Recommender.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class OnboardingPage : BaseViewPage
@@ -12,16 +11,11 @@ namespace Recommender.Views
             InitializeComponent();
         }
 
-        private void Button_OnClicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new LoginPage(), false);
-        }
-
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            
-            video.Stop();
+
+            introVideo.Stop();
         }
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Recommender.Controls
+namespace Recommender.Components
 {
     public class CircularList<T> : List<T>, IEnumerable<T>
     {

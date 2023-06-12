@@ -6,17 +6,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
-    <PackageReference Include="Xamarin.Forms.Visual.Material" Version="4.7.0.1080" />
+    <PackageReference Include="FreshMvvm" Version="3.0.0" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
+    <PackageReference Include="Xamarin.Forms.Visual.Material" Version="4.8.0.1269" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Acr.UserDialogs" Version="6.5.1" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
+    <Folder Include="Resources\Localizations\" />
+    <Folder Include="Layouts\" />
+    <Folder Include="Components\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Woodkit.ttf" />
@@ -28,19 +36,7 @@
       <SubType>Designer</SubType>
       <Generator></Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Styles.xaml">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\OnboardingPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Components\LogoView.xaml">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Components\ProgressBar.xaml">
       <SubType>Designer</SubType>
       <Generator></Generator>
     </EmbeddedResource>
@@ -64,22 +60,31 @@
       <SubType>Designer</SubType>
       <Generator></Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\MovieDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Localizations\en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Localizations\ua.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.uk.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\LogoView.xaml">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Components\LogoView.xaml">
+      <Generator></Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\FavouriteMoviesPage.xaml.cs">
       <DependentUpon>FavouriteMovies.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Resources\Styles.xaml.cs">
-      <DependentUpon>Styles.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\OnboardingPage.xaml.cs">
       <DependentUpon>OnboardingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Components\LogoView.xaml.cs">
-      <DependentUpon>LogoView.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Components\ProgressBar.xaml.cs">
-      <DependentUpon>ProgressBar.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\MoviesTabbedPage.xaml.cs">
       <DependentUpon>MoviesTabbedPage.xaml</DependentUpon>
@@ -96,5 +101,24 @@
     <Compile Update="Views\RateMoviesPage.xaml.cs">
       <DependentUpon>RateMoviesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\MovieDetailsPage.xaml.cs">
+      <DependentUpon>MovieDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Localizations\en.Designer.cs">
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Localizations\ua.Designer.cs">
+      <DependentUpon>AppResources.uk.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Components\EntryFrame.xaml.cs">
+      <DependentUpon>EntryFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Components\PickerFrame.xaml.cs">
+      <DependentUpon>PickerFrame.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Recommender.API\Recommender.API.csproj" />
+    <ProjectReference Include="..\Recommender.Core\Recommender.Core.csproj" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 using Xamarin.Forms;
 
-namespace Recommender.Controls
+namespace Recommender.Components
 {
     public class GridView : Grid
     {
