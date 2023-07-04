@@ -2,7 +2,7 @@
 
 namespace Recommender.Components
 {
-    public partial class CountBar : ContentView
+    public partial class CountBar : Grid
     {
         public static readonly BindableProperty TextProperty = BindableProperty.Create
          (nameof(Text), typeof(string), typeof(CountBar));

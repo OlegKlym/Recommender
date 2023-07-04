@@ -4,6 +4,7 @@
     
     <Color x:Key="PageBackgroundColor">#151873</Color>
     <Color x:Key="LightPageBackgroundColor">#10A6C3</Color>
+    <Color x:Key="DarkBackgroundColor">#123347</Color>
     <Color x:Key="EntryBackgroundColor">#91D7F0</Color>
     <Color x:Key="EntryTextColor">#5F5555</Color>
     <Color x:Key="LightTextColor">White</Color>

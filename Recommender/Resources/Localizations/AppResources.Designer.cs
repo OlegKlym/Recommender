@@ -8,26 +8,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Recommender.Resources.Localizations {
-    using System;
-    using System.Reflection;
-    
-    
+namespace Recommender.Resources.Localizations
+{
+
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AppResources {
+    public class AppResources {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AppResources() {
+        public AppResources() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static System.Resources.ResourceManager ResourceManager {
+        public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
                     System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Recommender.Resources.Localizations.AppResources", typeof(AppResources).Assembly);
@@ -38,7 +37,7 @@ namespace Recommender.Resources.Localizations {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static System.Globalization.CultureInfo Culture {
+        public static System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -46,52 +45,100 @@ namespace Recommender.Resources.Localizations {
                 resourceCulture = value;
             }
         }
-        
-        internal static string Logo {
+
+        public static string Logo {
             get {
                 return ResourceManager.GetString("Logo", resourceCulture);
             }
         }
-        
-        internal static string OnboardingContinue {
+
+        public static string OnboardingContinue {
             get {
                 return ResourceManager.GetString("OnboardingContinue", resourceCulture);
             }
         }
-        
-        internal static string LoginTitle {
+
+        public static string LoginTitle {
             get {
                 return ResourceManager.GetString("LoginTitle", resourceCulture);
             }
         }
-        
-        internal static string LoginEmail {
+
+        public static string LoginEmail {
             get {
                 return ResourceManager.GetString("LoginEmail", resourceCulture);
             }
         }
-        
-        internal static string LoginPassword {
+
+        public static string LoginPassword {
             get {
                 return ResourceManager.GetString("LoginPassword", resourceCulture);
             }
         }
-        
-        internal static string LoginContinue {
+
+        public static string LoginContinue {
             get {
                 return ResourceManager.GetString("LoginContinue", resourceCulture);
             }
         }
-        
-        internal static string LoginSignUp {
+
+        public static string LoginSignUp {
             get {
                 return ResourceManager.GetString("LoginSignUp", resourceCulture);
             }
         }
-        
-        internal static string LoginForgotPassword {
+
+        public static string LoginForgotPassword {
             get {
                 return ResourceManager.GetString("LoginForgotPassword", resourceCulture);
+            }
+        }
+
+        public static string LoginEmailRequired
+        {
+            get
+            {
+                return ResourceManager.GetString("LoginEmailRequired", resourceCulture);
+            }
+        }
+
+        public static string LoginEmailInvalid
+        {
+            get
+            {
+                return ResourceManager.GetString("LoginEmailInvalid", resourceCulture);
+            }
+        }
+
+        public static string LoginPasswordRequired
+        {
+            get
+            {
+                return ResourceManager.GetString("LoginPasswordRequired", resourceCulture);
+            }
+        }
+
+        public static string LoginPasswordInvalid
+        {
+            get
+            {
+                return ResourceManager.GetString("LoginPasswordInvalid", resourceCulture);
+            }
+        }
+
+        public static string LoginFailed
+        {
+            get
+            {
+                return ResourceManager.GetString("LoginFailed", resourceCulture);
+            }
+        }
+
+        public static string LoadingMessage
+        {
+            get
+            {
+                return ResourceManager.GetString("LoadingMessage", resourceCulture);
             }
         }
     }

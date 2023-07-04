@@ -1,38 +1,37 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Recommender.Components.CountBar"
-             x:Name="CountBarView">
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Class="Recommender.Components.CountBar"
+      x:Name="CountBarView"
+      Padding="20,15,20,5"
+      ColumnSpacing="0">
 
-     <Grid Padding="20,15,20,5"
-           ColumnSpacing="0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
 
-        <Frame Grid.ColumnSpan="2"
-                CornerRadius="30"
-                Padding="0"
-                BackgroundColor="Transparent">
-            <ProgressBar HeightRequest="10"
-                         ProgressColor="#DA3F38"
-                         Progress="{Binding Value, Source={x:Reference ProgressBarName}}"
-                         Margin="35,0,0,0"
-                         ScaleY="4" />
-        </Frame>
+    <Frame Grid.ColumnSpan="2"
+           CornerRadius="30"
+           Padding="0"
+           BackgroundColor="Transparent">
+        <ProgressBar HeightRequest="10"
+                     ProgressColor="#DA3F38"
+                     Progress="{Binding Value, Source={x:Reference ProgressBarName}}"
+                     Margin="35,0,0,0"
+                     ScaleY="4" />
+    </Frame>
 
-        <Frame BackgroundColor="White"
-               WidthRequest="40"
-               HeightRequest="40"
-               CornerRadius="20"
-               Padding="0">
-            <Label x:Name="ProgressLabel"
-                    Text="{Binding Text, Source={x:Reference ProgressBarName}}"
-                    TextColor="Black"
-                    FontSize="18"
-                    HorizontalOptions="CenterAndExpand"
-                    VerticalOptions="CenterAndExpand" />
-        </Frame>
-    </Grid>
-</ContentView>
+    <Frame BackgroundColor="White"
+           WidthRequest="40"
+           HeightRequest="40"
+           CornerRadius="20"
+           Padding="0">
+        <Label x:Name="ProgressLabel"
+               Text="{Binding Text, Source={x:Reference ProgressBarName}}"
+               TextColor="Black"
+               FontSize="18"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="CenterAndExpand" />
+    </Frame>
+</Grid>

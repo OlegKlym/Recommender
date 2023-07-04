@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:converters="clr-namespace:Recommender.Converters;assembly=Recommender"
+       x:Class="Recommender.Components.ValidatedEntry"
+       x:Name="ValidatedEntryName">
+
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <converters:StringIsEmptyVisibilityConverter x:Key="StringIsEmptyVisibilityConverter" />
+        </ResourceDictionary>
+    </StackLayout.Resources>
+
+    <Frame Style="{StaticResource EntryFrame}">
+        <Entry x:Name="EntryView"
+               MaxLength="{Binding MaxLength, Source={x:Reference ValidatedEntryName}}"
+               Placeholder="{Binding EntryPlaceholder, Source={x:Reference ValidatedEntryName}}"
+               Text="{Binding EntryText, Source={x:Reference ValidatedEntryName}, Mode=TwoWay}"
+               IsPassword="{Binding IsPasswordEntry, Source={x:Reference ValidatedEntryName}}"
+               Style="{StaticResource DefaultEntry}" />
+    </Frame>
+
+    <Label Text="{Binding ValidationText, Source={x:Reference ValidatedEntryName}}" 
+           TextColor="{Binding ValidationTextColor, Source={x:Reference ValidatedEntryName}}"
+           IsVisible="{Binding ValidationText, Source={x:Reference ValidatedEntryName},
+                                               Converter={StaticResource StringIsEmptyVisibilityConverter}}"
+           FontSize="12"
+           Margin="0, 2, 0, 0" />
+
+</StackLayout>

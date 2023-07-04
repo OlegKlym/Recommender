@@ -14,24 +14,33 @@
     <PackageReference Include="Xamarin.FFImageLoading.Svg" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
-    <PackageReference Include="Acr.UserDialogs" Version="6.5.1" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="Acr.UserDialogs" Version="6.5.1" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
+    <PackageReference Include="NLog" Version="5.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
-    <Folder Include="Resources\Localizations\" />
     <Folder Include="Layouts\" />
     <Folder Include="Components\" />
+    <Folder Include="UseCases\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Resources\Fonts\" />
+    <Folder Include="Resources\Localizations\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Mappers\" />
+    <Folder Include="ItemTemplates\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Fonts\Woodkit.ttf" />
-    <None Remove="Resources\Fonts\BOOKOS.TTF" />
     <EmbeddedResource Include="Resources\Fonts\Bookos.ttf" />
-    <None Remove="Resources\Fonts\Forza-BlackItalic.otf" />
     <EmbeddedResource Include="Resources\Fonts\Forza-BlackItalic.otf" />
+    <EmbeddedResource Include="Resources\Fonts\Woodkit.ttf" />
+    <EmbeddedResource Include="NLog.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\Fonts\BOOKOS.TTF" />
     <EmbeddedResource Update="Views\FavouriteMoviesPage.xaml">
       <SubType>Designer</SubType>
       <Generator></Generator>
@@ -44,7 +53,7 @@
       <SubType>Designer</SubType>
       <Generator></Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\RecommendationsPage.xaml">
+    <EmbeddedResource Update="Views\RecommendedMoviesPage.xaml">
       <SubType>Designer</SubType>
       <Generator></Generator>
     </EmbeddedResource>
@@ -72,12 +81,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.uk.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Controls\LogoView.xaml">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Components\LogoView.xaml">
-      <Generator></Generator>
-    </EmbeddedResource>
+    <None Remove="NLog.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\FavouriteMoviesPage.xaml.cs">
@@ -89,8 +93,8 @@
     <Compile Update="Views\MoviesTabbedPage.xaml.cs">
       <DependentUpon>MoviesTabbedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\RecommendationsPage.xaml.cs">
-      <DependentUpon>RecommendationsPage.xaml</DependentUpon>
+    <Compile Update="Views\RecommendedMoviesPage.xaml.cs">
+      <DependentUpon>RecommendedMoviesPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\BaseViewPage.xaml.cs">
       <DependentUpon>BaseViewPage.xaml</DependentUpon>
@@ -110,15 +114,24 @@
     <Compile Update="Resources\Localizations\ua.Designer.cs">
       <DependentUpon>AppResources.uk.resx</DependentUpon>
     </Compile>
-    <Compile Update="Components\EntryFrame.xaml.cs">
-      <DependentUpon>EntryFrame.xaml</DependentUpon>
+    <Compile Update="Components\ValidatedEntry.xaml.cs">
+      <DependentUpon>ValidatedEntry.xaml</DependentUpon>
     </Compile>
     <Compile Update="Components\PickerFrame.xaml.cs">
       <DependentUpon>PickerFrame.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Components\LoginButtonBar.xaml.cs">
+      <DependentUpon>LoginButtonBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Components\LogoBanner.xaml.cs">
+      <DependentUpon>LogoBanner.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Components\ConfirmButton.xaml.cs">
+      <DependentUpon>ConfirmButton.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Recommender.API\Recommender.API.csproj" />
-    <ProjectReference Include="..\Recommender.Core\Recommender.Core.csproj" />
+    <ProjectReference Include="..\Repositories\Recommender.API\Recommender.API.csproj" />
+    <ProjectReference Include="..\Contracts\Recommender.Core\Recommender.Core.csproj" />
   </ItemGroup>
 </Project>

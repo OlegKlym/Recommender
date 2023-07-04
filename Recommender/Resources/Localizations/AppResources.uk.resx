@@ -37,4 +37,22 @@
     <data name="LoginForgotPassword" xml:space="preserve">
         <value>Забули пароль?</value>
     </data>
+     <data name="LoginEmailRequired" xml:space="preserve">
+        <value>Відсутній email.</value>
+    </data>
+    <data name="LoginEmailInvalid" xml:space="preserve">
+        <value>"Шось email якийсь дивний."</value>
+    </data>
+     <data name="LoginPasswordRequired" xml:space="preserve">
+        <value>Відсутній пароль.</value>
+    </data>
+    <data name="LoginPasswordInvalid" xml:space="preserve">
+        <value>Шось пароль якийсь дивний.</value>
+    </data>
+    <data name="LoginFailed" xml:space="preserve">
+        <value>Не вдалося увійти. Перевір дані!</value>
+    </data>
+    <data name="LoadingMessage" xml:space="preserve">
+        <value>Очікуйте</value>
+    </data>
 </root>

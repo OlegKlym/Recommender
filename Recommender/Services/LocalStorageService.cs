@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Recommender.Core.Models;
+using Recommender.Core.Services;
 using Xamarin.Essentials;
 
 namespace Recommender.Services
