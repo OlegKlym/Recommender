@@ -1,2 +1,27 @@
-.vs
-.idea
+# User-specific files
+*.suo
+*.userprefs
+*.user
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio files
+.vs/
+.idea/
+*.vspscc
+*_i.c
+*_p.c
+*.sln.docstates
+*.suo
+*.sln.ide
+*.dll.refresh
