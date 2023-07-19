@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="Recommender.Components.DatePickerFrame"
+       x:Name="DatePickerFrameView"
+       Style="{StaticResource EntryFrame}">
+
+    <Grid>
+        <DatePicker x:Name="datePicker"
+                    Date="{Binding Date, Source={x:Reference DatePickerFrameView}}"
+                    HorizontalOptions="FillAndExpand"
+                    MinimumDate="01/01/1970"/>
+
+        <Label x:Name="placeholder"
+                InputTransparent="True"
+                Text="{Binding Placeholder, Source={x:Reference DatePickerFrameView}}"
+                IsVisible="{Binding IsNull, Source={x:Reference DatePickerFrameView}}"
+                FontSize="Medium"
+                Margin="5,0"
+                VerticalOptions="Center"/>
+    </Grid>
+</Frame>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Services\UsersService.cs" />
+    <Compile Include="Services\MoviesService.cs" />
+    <Compile Include="Services\BaseMocksService.cs" />
+    <Compile Include="Services\AuthService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Contracts\Recommender.Contracts.csproj" />
+  </ItemGroup>
+</Project>

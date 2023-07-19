@@ -1,0 +1,31 @@
+﻿<DataTemplate xmlns="http://xamarin.com/schemas/2014/forms"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:components="clr-namespace:Recommender.Components"
+              xmlns:models="clr-namespace:Recommender.Core.Models;assembly=Recommender.Contracts"
+              x:Class="Recommender.ItemTemplates.RecommendationItemTemplate"
+              x:DataType="models:MovieModel">
+
+     <Grid Margin="10">
+
+        <!-- Tap gesture recognizer for handling item click -->
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding BindingContext.OpenMovieDetailsCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                  CommandParameter="{Binding}"/>
+        </Grid.GestureRecognizers>
+
+        <Frame Padding="0"
+               Margin="10,5"
+               CornerRadius="12"
+               HasShadow="False"
+               BackgroundColor="{StaticResource AccentBackgroundColor}">
+
+           <components:MovieCard ImageUrl="{Binding Image}"
+                                 Title="{Binding Title}"
+                                 Year="{Binding Year}"
+                                 MainGenre="{Binding MainGenre}"
+                                 AdditionalGenre="{Binding AdditionalGenre}"
+                                 AverageRating="{Binding AverageRating}"
+                                 Popularity="{Binding Popularity}"/>
+        </Frame>
+    </Grid>
+</DataTemplate>

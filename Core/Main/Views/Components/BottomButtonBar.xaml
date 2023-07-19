@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:components="clr-namespace:Recommender.Components"
+      x:Class="Recommender.Components.BottomButtonBar"
+      x:Name="BottomButtonBarName"
+      ColumnSpacing="0"
+      ColumnDefinitions="*,*"
+      RowSpacing="0"
+      Padding="10,0,10,25">
+
+    <components:UnderlinedButton Command="{Binding LeftButtonCommand, Source={x:Reference BottomButtonBarName}}"
+                                 HorizontalOptions="Start"
+                                 Text="{Binding LeftButtonText, Source={x:Reference BottomButtonBarName}}"
+                                 Style="{StaticResource LinkButton}"/>
+
+    <components:UnderlinedButton Grid.Column="1"
+                                 Command="{Binding RightButtonCommand, Source={x:Reference BottomButtonBarName}}"
+                                 HorizontalOptions="End"
+                                 Style="{StaticResource LinkButton}"
+                                 Text="{Binding RightButtonText, Source={x:Reference BottomButtonBarName}}"/>
+</Grid>

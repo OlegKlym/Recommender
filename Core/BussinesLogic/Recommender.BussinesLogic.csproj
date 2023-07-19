@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <PostSharpDisableProduceReferenceAssemblyHandling>True</PostSharpDisableProduceReferenceAssemblyHandling>
+    <PostSharpDependencyRestoreDisabled>False</PostSharpDependencyRestoreDisabled>
+  </PropertyGroup>
+    
+  <ItemGroup>
+    <Compile Include="Helpers\EmailValidator.cs" Condition=" '$(EnableDefaultCompileItems)' == 'false' " />
+    <Compile Include="Helpers\PasswordValidator.cs" Condition=" '$(EnableDefaultCompileItems)' == 'false' " />
+    <Compile Include="UseCases\LoginUseCase.cs" Condition=" '$(EnableDefaultCompileItems)' == 'false' " />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="UseCases\" />
+    <Folder Include="Mappers\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Resources\Localizations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Contracts\Recommender.Contracts.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="5.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="FluentValidation" Version="11.6.0" />
+  </ItemGroup>
+</Project>

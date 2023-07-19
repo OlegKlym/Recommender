@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    
+    <Color x:Key="PrimaryBackgroundColor">#151873</Color>
+    <Color x:Key="SecondaryBackgroundColor">#10A6C3</Color>
+    <Color x:Key="AccentBackgroundColor">#123347</Color>
+    <Color x:Key="EntryBackgroundColor">#91D7F0</Color>
+    <Color x:Key="EntryTextColor">#5F5555</Color>
+    <Color x:Key="LightTextColor">#FFFFFF</Color>
+    <Color x:Key="LabelTextSecondaryColor">#9C9696</Color>
+    <Color x:Key="PrimaryButtonBackgroundColor">#D7413C</Color>
+    
+</ResourceDictionary>

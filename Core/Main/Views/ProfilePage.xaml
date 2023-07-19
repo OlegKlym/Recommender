@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pages:StyledPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Recommender.Pages;assembly=Recommender"
+             xmlns:components="clr-namespace:Recommender.Components;assembly=Recommender"
+             xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="Recommender.Views.ProfilePage">
+    
+    <pages:StyledPage.Content>
+        <Grid RowDefinitions="Auto, *, Auto"
+              RowSpacing="20"
+              Padding="12">
+            
+            <Frame BackgroundColor="{StaticResource AccentBackgroundColor}"
+                   CornerRadius="12"
+                   Padding="0">
+                
+                <Grid ColumnDefinitions="Auto, *">
+                    <Frame HeightRequest="100"
+                           WidthRequest="100"
+                           CornerRadius="20"
+                           Margin="10"
+                           Padding="0"
+                           HorizontalOptions="Start"
+                           BackgroundColor="White">
+                
+                        <ffimage:CachedImage x:Name="profilePhoto"
+                                             Aspect="AspectFit"
+                                             HeightRequest="100"
+                                             WidthRequest="100"/>
+                    </Frame>
+            
+                    <StackLayout Grid.Column="1" 
+                                 Padding="0,15"
+                                 Spacing="0">
+                        <Label 
+                            Text="Марта Паєнська"
+                            FontSize="20"
+                            FontAttributes="Italic"
+                            Margin="5,0"
+                            TextColor="White"/>
+            
+                        <Label Text="27 років, Львів"
+                               FontSize="14"
+                               FontAttributes="Italic"
+                               Margin="5,0"
+                               TextColor="White"/>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+            
+            <Frame Grid.Row="1" 
+                   BackgroundColor="{StaticResource AccentBackgroundColor}"
+                   CornerRadius="12"
+                   Padding="0"/>
+            
+            <Frame Grid.Row="2" 
+                   BackgroundColor="{StaticResource AccentBackgroundColor}"
+                   VerticalOptions="End"
+                   CornerRadius="12"
+                   Padding="10">
+                <StackLayout Spacing="10">
+                    <Label 
+                         Text="Переглянуті фільми"
+                         FontSize="20"
+                         FontAttributes="Italic"
+                         HorizontalOptions="Center"
+                         Margin="5,5,5,0"
+                         TextColor="White"/>
+                    
+                    <BoxView HeightRequest="0.5"
+                             BackgroundColor="White"/>
+                    
+                    <Label 
+                        Text="Статистика"
+                        FontSize="20"
+                        FontAttributes="Italic"
+                        HorizontalOptions="Center"
+                        Margin="5,0"
+                        TextColor="White"/>
+                    
+                    <BoxView HeightRequest="0.5"
+                             BackgroundColor="White"/>
+                    
+                    <Label 
+                        Text="Рейтинги"
+                        FontSize="20"
+                        FontAttributes="Italic"
+                        HorizontalOptions="Center"
+                        Margin="5,0"
+                        TextColor="White"/>
+                    
+                    <BoxView HeightRequest="0.5"
+                             BackgroundColor="White"/>
+                    
+                    <Label 
+                        Text="Вийти"
+                        FontSize="20"
+                        FontAttributes="Italic"
+                        HorizontalOptions="Center"
+                        VerticalOptions="End"
+                        Margin="5,0"
+                        TextColor="White"/>
+
+                </StackLayout>
+            </Frame>
+        </Grid>
+    </pages:StyledPage.Content>
+</pages:StyledPage>

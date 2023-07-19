@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pages:StyledPage   xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:pages="clr-namespace:Recommender.Pages"
+                    xmlns:viewModels="clr-namespace:Recommender.ViewModels"
+                    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                    xmlns:models="clr-namespace:Recommender.Core.Models;assembly=Recommender.Contracts"
+                    x:DataType="viewModels:RateMoviesPageModel"
+                    x:Class="Recommender.Pages.RateMoviesPage"
+                    x:Name="RateMoviesPageName">
+
+    <Grid RowDefinitions="15, *"
+              RowSpacing="0">
+            <CollectionView x:Name="carousel"
+                            Grid.Row="1"
+                            VerticalOptions="Center"
+                            ItemsSource="{Binding Recommendations}"
+                            PropertyChanged="Carousel_PropertyChanged"
+                            Scrolled="Carousel_OnScrolled">
+
+                <CollectionView.Header>
+                    <Grid WidthRequest="30"/>
+                </CollectionView.Header>
+
+                <CollectionView.Footer>
+                    <Grid WidthRequest="30"/>
+                </CollectionView.Footer>
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       SnapPointsType="MandatorySingle"
+                                       SnapPointsAlignment="Center" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:MovieModel">
+
+                         <Grid RowDefinitions="*, Auto, Auto"
+                               RowSpacing="0">
+
+                             <Grid.GestureRecognizers>
+                                 <TapGestureRecognizer/>
+                             </Grid.GestureRecognizers>
+
+                                <Frame Padding="0"
+                                        CornerRadius="20"
+                                        WidthRequest="300"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        Margin="20,20,20,0"
+                                        BackgroundColor="Transparent">
+                                    <forms:CachedImage x:Name="posterImage"
+                                                        Source="{Binding Image}"
+                                                        Aspect="AspectFill" />
+                                </Frame>
+
+                                <StackLayout x:Name="rates"
+                                                Grid.Row="1"
+                                                Orientation="Horizontal"
+                                                Spacing="25"
+                                                VerticalOptions="Start"
+                                                HorizontalOptions="CenterAndExpand">
+
+                                    <ImageButton BackgroundColor="Green" 
+                                                 Source="like.png"
+                                                 Style="{StaticResource RateButton}"
+                                                 Clicked="ImageButton_OnClicked"
+                                                 PropertyChanged="ImageButton_PropertyChanged"
+                                                 Command="{Binding BindingContext.AddToLikedMovieCommand,
+                                                            Source={x:Reference RateMoviesPageName}}"
+                                                 CommandParameter="{Binding}"/>
+                                        
+                                    <ImageButton BackgroundColor="Orange" 
+                                                 Source="sceptic.png"
+                                                 Style="{StaticResource RateButton}"
+                                                 Clicked="ImageButton_OnClicked"
+                                                 Command="{Binding BindingContext.AddToNeutralMovieCommand,
+                                                            Source={x:Reference RateMoviesPageName}}"
+                                                 CommandParameter="{Binding}"/>
+                                        
+                                    <ImageButton BackgroundColor="#D7413C" 
+                                                 Source="dislike.png"
+                                                 Style="{StaticResource RateButton}"
+                                                 Clicked="ImageButton_OnClicked"
+                                                 Command="{Binding BindingContext.AddToDislikedMovieCommand,
+                                                            Source={x:Reference RateMoviesPageName}}"
+                                                 CommandParameter="{Binding}"/>
+                                </StackLayout>
+
+                                <Label Grid.Row="2"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        Margin="0,20,0,25"
+                                        Style="{StaticResource LinkLabel}"
+                                        Text="Не переглянуто">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.AddToNotSeenMovieCommand,
+                                                                            Source={x:Reference RateMoviesPageName}}"
+                                                              CommandParameter="{Binding}"
+                                                              Tapped="ImageButton_OnClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+</pages:StyledPage>

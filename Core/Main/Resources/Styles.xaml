@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    
+    <Style x:Key="LogoLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="Woodkit" />
+        <Setter Property="FontSize" Value="25" />
+        <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+    </Style>
+
+    <Style x:Key="AppTitleLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="Forza-BlackItalic" />
+        <Setter Property="FontSize" Value="Title" />
+        <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+    </Style>
+
+     <Style x:Key="TitleLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="Italic" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+    </Style>
+
+    <Style x:Key="DescriptionLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource LabelTextSecondaryColor}" />
+     </Style>
+
+    <Style x:Key="DefaultEntry" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="{StaticResource EntryBackgroundColor}" />
+        <Setter Property="FontFamily" Value="Bookos" />
+        <Setter Property="IsTextPredictionEnabled" Value="False" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource EntryTextColor}" />
+        <Setter Property="TextColor" Value="{StaticResource EntryTextColor}" />
+    </Style>
+
+    <Style x:Key="ConfirmButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryButtonBackgroundColor}" />
+        <Setter Property="CornerRadius" Value="22" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontFamily" Value="Forza-BlackItalic" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="HeightRequest" Value="60" />
+        <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+    </Style>
+
+    <Style x:Key="LinkButton" TargetType="Label">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Bookos" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+        <Setter Property="TextDecorations" Value="Underline" />
+    </Style>
+
+    <Style x:Key="EntryFrame" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{StaticResource EntryBackgroundColor}" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="Padding" Value="8,0" />
+    </Style>
+
+     <Style TargetType="ContentPage" x:Key="BasePageStyle">
+         <Setter Property="NavigationPage.HasNavigationBar" Value="False" />
+         <Setter Property="Padding" Value="{OnPlatform Android='0,20,0,45', iOS='0,35,0,45'}" />
+         <Setter Property="Background">
+             <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="{StaticResource PrimaryBackgroundColor}" Offset="0.1" />
+                    <GradientStop Color="{StaticResource SecondaryBackgroundColor}" Offset="1.0" />
+                </LinearGradientBrush>
+             </Setter.Value>
+         </Setter>
+    </Style>
+</ResourceDictionary>
