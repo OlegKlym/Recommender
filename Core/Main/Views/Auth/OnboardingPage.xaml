@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pages:StyledPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:localizations="clr-namespace:Recommender.BussinesLogic.Resources.Localizations;assembly=Recommender.BussinesLogic"
+                  xmlns:pageModels="clr-namespace:Recommender.PageModels"
+                  xmlns:pages="clr-namespace:Recommender.Pages"
+                  xmlns:components="clr-namespace:Recommender.Components"
+                  x:Class="Recommender.Pages.OnboardingPage"
+                  x:DataType="pageModels:OnboardingPageModel">
+
+    <!-- TODO: The XAML file could be extended to include more onboarding screens. -->
+    <Grid CompressedLayout.IsHeadless="True"
+          RowDefinitions="70,5*,*">
+
+        <!-- app's logo -->
+        <components:LogoBanner HorizontalOptions="Start"
+                               VerticalOptions="CenterAndExpand"
+                               Margin="15,15,15,0"
+                               Text="{x:Static localizations:AppResources.Logo}"
+                               Source="logo.svg"/>
+
+        <!-- intro video -->
+        <components:VideoPlayer Grid.Row="1"
+                                Margin="0,10"
+                                IsLooping="True"
+                                EnableAutoPlay="True"
+                                Url="{Binding IntroVideoUrl}"/>
+
+        <!-- continue button -->
+        <components:ConfirmButton Grid.Row="2"
+                                  Command="{Binding ContinueCommand}"
+                                  Margin="20,0"
+                                  Padding="0"
+                                  Text="{x:Static localizations:AppResources.OnboardingContinue}"
+                                  VerticalOptions="CenterAndExpand"/>
+
+    </Grid>
+</pages:StyledPage>

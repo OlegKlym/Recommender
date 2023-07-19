@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:ffImageLoading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+      xmlns:converters="clr-namespace:Recommender.Converters"
+      xmlns:localizations="clr-namespace:Recommender.BussinesLogic.Resources.Localizations;assembly=Recommender.BussinesLogic"
+      x:Class="Recommender.Components.MovieCard"
+      x:Name="MovieCardName"
+      ColumnDefinitions="100,*"
+      HeightRequest="120">
+    
+    <Grid.Resources>
+        <converters:MultiStringFormatConverter x:Key="MultiStringFormatConverter"/>
+    </Grid.Resources>
+
+    <!-- Movie image -->
+    <ffImageLoading:CachedImage Aspect="AspectFill"
+                                Source="{Binding ImageUrl, Source={x:Reference MovieCardName}}"/>
+
+
+    <StackLayout Grid.Column="1"
+                 BindingContext="{x:Reference MovieCardName}"
+                 Padding="10,5"
+                 Spacing="5"
+                 VerticalOptions="CenterAndExpand">
+
+        <!-- Movie title -->
+        <Label Style="{StaticResource TitleLabel}">
+            <Label.Text>
+                <MultiBinding Converter="{StaticResource MultiStringFormatConverter}"
+                              ConverterParameter="{StaticResource TitleYearFormat}">
+                    <Binding Path="Title" />
+                    <Binding Path="Year" />
+                </MultiBinding>
+            </Label.Text>
+        </Label>
+
+        <!-- Main and additional genres -->
+        <Label Style="{StaticResource DescriptionLabelStyle}">
+            <Label.Text>
+                <MultiBinding Converter="{StaticResource MultiStringFormatConverter}"
+                              ConverterParameter="{StaticResource GenresFormat}">
+                    <Binding Path="MainGenre" />
+                    <Binding Path="AdditionalGenre" />
+                </MultiBinding>
+            </Label.Text>
+        </Label>
+
+        <!-- Popularity -->
+        <Label Style="{StaticResource DescriptionLabelStyle}"
+               Text="{Binding Popularity, StringFormat={x:Static localizations:AppResources.MoviePopularity}, Source={x:Reference MovieCardName}}"/>
+
+        <!-- Average rating -->
+        <Label Style="{StaticResource DescriptionLabelStyle}"
+               Text="{Binding AverageRating, StringFormat={x:Static localizations:AppResources.MovieAverageRating}, Source={x:Reference MovieCardName}}"/>
+    </StackLayout> 
+</Grid>

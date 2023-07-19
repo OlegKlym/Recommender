@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Recommender.API.Interfaces;
 using Recommender.Core.Models;
 using Recommender.Core.Models.Requests;
 using Recommender.Core.Models.Responses;
+using Recommender.Core.Services;
 
 namespace Recommender.API.Services
 {

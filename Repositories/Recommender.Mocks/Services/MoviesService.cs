@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Recommender.API.Interfaces;
+using Recommender.Core.Enums;
 using Recommender.Core.Models;
 using Recommender.Core.Models.Requests;
 using Recommender.Core.Models.Responses;
-using Recommender.Mocks.Services;
+using Recommender.Core.Services;
 
-namespace Recommender.API.Services
+namespace Recommender.Mocks.Services
 {
     public class MoviesService : BaseMocksService, IMoviesService
     {
@@ -17,8 +17,31 @@ namespace Recommender.API.Services
             {
                 Data = new GetRecommendationsResponse
                 {
-                    RecommendedMovies = new List<MovieModel>()
-                }
+                    RecommendedMovies = new List<MovieModel>
+                    {
+                        new MovieModel
+                        {
+                            Title = "Movie 1",
+                            Year = 2021,
+                            MainGenre = Genre.Action,
+                            AdditionalGenre = Genre.Thriller,
+                            Popularity = 100,
+                            AverageRating = 8.5,
+                            Image = "https://example.com/movie1.jpg",
+                        },
+                        new MovieModel
+                        {
+                             Title = "Movie 2",
+                             Year = 2022,
+                             MainGenre = Genre.Drama,
+                             AdditionalGenre = Genre.Romance,
+                             Popularity = 80,
+                             AverageRating = 7.8,
+                             Image = "https://example.com/movie2.jpg",
+                        }
+                    }
+                },
+                StatusCode = 200
             });
         }
 

@@ -15,6 +15,6 @@
      <PackageReference Include="FreshMvvm" Version="3.0.0" />
    </ItemGroup>
    <ItemGroup>
-     <ProjectReference Include="..\..\Contracts\Recommender.Core\Recommender.Core.csproj" />
+     <ProjectReference Include="..\..\Core\Contracts\Recommender.Contracts.csproj" />
    </ItemGroup>
 </Project>

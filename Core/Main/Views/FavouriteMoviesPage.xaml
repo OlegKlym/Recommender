@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pages:StyledPage  xmlns="http://xamarin.com/schemas/2014/forms"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:pages="clr-namespace:Recommender.Pages"
+                   xmlns:components="clr-namespace:Recommender.Components"
+                   xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                   xmlns:viewModels="clr-namespace:Recommender.ViewModels"
+                   xmlns:models="clr-namespace:Recommender.Core.Models;assembly=Recommender.Contracts"
+                   x:Class="Recommender.Pages.FavouriteMoviesPage"
+                   x:DataType="viewModels:FavouriteMoviesPageModel"
+                   x:Name="FavouriteMoviesPageName">
+
+    <pages:StyledPage.Content>
+        <ScrollView x:Name="ScrollView">
+            <Grid RowSpacing="5"
+                  RowDefinitions="Auto, Auto, *, Auto"
+                  CompressedLayout.IsHeadless="True">
+                
+                <!-- progress bar -->
+                <!--<controls:CountBar Text="0" Value="0"/>-->
+                <Grid Margin="20,15,20,5"
+                      ColumnSpacing="0"
+                      CompressedLayout.IsHeadless="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Frame Grid.ColumnSpan="2"
+                           CornerRadius="30"
+                           Padding="0"
+                           BackgroundColor="Transparent">
+                        <ProgressBar x:Name="ProgressBar"
+                                     HeightRequest="10"
+                                     ProgressColor="#DA3F38"
+                                     Progress="{Binding ProgressBarPercentage}"
+                                     IsEnabled="{Binding IsSearchBarAvailable}"
+                                     Margin="35,0,0,0"
+                                     ScaleY="4" />
+                    </Frame>
+
+                    <Frame BackgroundColor="White"
+                           WidthRequest="40"
+                           HeightRequest="40"
+                           CornerRadius="20"
+                           Padding="0">
+                        <Label x:Name="ProgressLabel"
+                               Text="{Binding AddedMoviesCount}"
+                               TextColor="Black"
+                               FontSize="18"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand" />
+                    </Frame>
+                </Grid>
+
+                <!-- search bar -->
+                <Frame Grid.Row="1"
+                       Padding="0"
+                       CornerRadius="20"
+                       Margin="10,5,10,10"
+                       HeightRequest="50"
+                       HasShadow="False"
+                       BorderColor="White">
+                    <components:CustomSearchBar x:Name="SearchBar"
+                               PlaceholderColor="#A89B9B"
+                               Placeholder="Введіть назву фільму"
+                               BackgroundColor="#123347"
+                               CancelButtonColor="White"
+                               TextColor="White"
+                               Text="{Binding SearchTerm, Mode=TwoWay}"
+                               SearchCommand="{Binding SearchCommand}"
+                               ClearSearchCommand="{Binding ClearSearchCommand}"/>
+                </Frame>
+
+                <!-- selected movies -->
+                <components:GridView x:Name="SelectedMoviesList"
+                                   Grid.Row="2"
+                                   Margin="10,0"
+                                   VerticalOptions="Start"
+                                   ColumnsCount="3"
+                                   BindableLayout.ItemsSource="{Binding FavouriteMovies}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:MovieModel">
+                            <Frame CornerRadius="15"
+                                   Padding="0"
+                                   WidthRequest="105"
+                                   HasShadow="False">
+
+                                <Grid>
+                                    <forms:CachedImage Source="{Binding Image}"
+                                                       DownsampleToViewSize="True"
+                                                       Aspect="AspectFill"
+                                                       HorizontalOptions="Fill"
+                                                       VerticalOptions="Fill" />
+
+                                    <ImageButton HorizontalOptions="End"
+                                                 VerticalOptions="Start"
+                                                 Margin="5"
+                                                 WidthRequest="40"
+                                                 HeightRequest="40"
+                                                 CornerRadius="20"
+                                                 Source="basket.png"
+                                                 Aspect="Fill"
+                                                 Command="{Binding BindingContext.RemoveFromFavouritesCommand,
+                                                        Source={x:Reference FavouriteMoviesPageName}}"
+                                                 CommandParameter="{Binding}"
+                                                 BackgroundColor="Transparent" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </components:GridView>
+
+                <!-- suggestions List -->
+                <StackLayout x:Name="SuggectionsComponent" 
+                             Grid.Row="1"
+                             Grid.RowSpan="2"   
+                             IsVisible="{Binding AreSuggestionsVisible}"
+                             Margin="10,40,10,0">
+
+                    <StackLayout x:Name="SuggestionsList"
+                                 Padding="15,15,15,5"
+                                 VerticalOptions="Start"
+                                 BackgroundColor="#123347"
+                                 BindableLayout.ItemsSource="{Binding SearchedMovies}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="models:MovieModel">
+                                <Grid RowSpacing="10" 
+                                      ColumnSpacing="10"
+                                      ColumnDefinitions="Auto,Auto">
+                                    
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.AddToFavouritesCommand,
+                                                        Source={x:Reference FavouriteMoviesPageName}}"
+                                                              CommandParameter="{Binding}"/>
+                                    </Grid.GestureRecognizers>
+                                                                        
+                                    <Frame Padding="0"
+                                           HeightRequest="100"
+                                           WidthRequest="80"
+                                           HasShadow="False"
+                                           HorizontalOptions="Start"
+                                           VerticalOptions="Center"
+                                           Margin="5"
+                                           CornerRadius="10">
+                                        <forms:CachedImage Aspect="AspectFill"
+                                                           DownsampleToViewSize="True"
+                                                           Source="{Binding Image}" />
+                                    </Frame>
+
+
+                                    <StackLayout Grid.Column="1" 
+                                                 Spacing="5"
+                                                 CompressedLayout.IsHeadless="True"
+                                                 VerticalOptions="Center">
+                                        
+                                        <Label FontSize="20"
+                                               FontAttributes="Italic"
+                                               Text="{Binding Title}"
+                                               TextColor="{StaticResource LightTextColor}"/>
+
+                                        <Label Text="{Binding Year}"
+                                               TextColor="#9C9696" />
+                                    
+                                        <Label TextColor="#9C9696">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding MainGenre}" />
+                                                    <Span Text=" / " />
+                                                    <Span Text="{Binding AdditionalGenre}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </StackLayout>
+                                   
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    
+                    <Frame HeightRequest="20" 
+                           BackgroundColor="#123347"
+                           Margin="0,-15,0,0"
+                           Padding="0"
+                           CornerRadius="15"/>
+                </StackLayout>
+
+                <Button x:Name="ConfirmButton"
+                        Grid.Row="3"
+                        IsEnabled="{Binding IsContinueAvailable}"
+                        Text="Згенерувати рекомендації"
+                        Style="{StaticResource ConfirmButton}"
+                        Command="{Binding ContinueCommand}"
+                        Margin="20,20,20,30" />
+            </Grid>
+        </ScrollView>
+    </pages:StyledPage.Content>
+</pages:StyledPage>

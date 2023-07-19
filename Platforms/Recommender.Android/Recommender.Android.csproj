@@ -96,7 +96,6 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\BottomTabbedPageRenderer.cs" />
     <Compile Include="Renderers\DefaultButtonRenderer.cs" />
-    <Compile Include="Renderers\ExtendedCollectionViewRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\DefaultEntryRenderer.cs" />
@@ -179,9 +178,13 @@
     <AndroidAsset Include="Assets\NLog.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Recommender\Recommender.csproj">
-      <Project>{3467DE0B-F71F-4F62-8C07-D2A9CA7965E2}</Project>
-      <Name>Recommender</Name>
+    <ProjectReference Include="..\..\Core\Main\Recommender.Main.csproj">
+      <Project>{260A2009-40CF-4F38-8F5D-6F68461376C6}</Project>
+      <Name>Recommender.Main</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Contracts\Recommender.Contracts.csproj">
+      <Project>{535512BD-FB46-424F-9A73-7C17D674E78C}</Project>
+      <Name>Recommender.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

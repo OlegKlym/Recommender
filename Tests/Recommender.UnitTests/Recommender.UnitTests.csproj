@@ -51,12 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Recommender\Recommender.csproj">
-      <Project>{3467DE0B-F71F-4F62-8C07-D2A9CA7965E2}</Project>
-      <Name>Recommender</Name>
+      <Project>{260A2009-40CF-4F38-8F5D-6F68461376C6}</Project>
+      <Name>Recommender.Main</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Contracts\Recommender.Core\Recommender.Core.csproj">
-      <Project>{A5075EE4-1D07-4C95-8AA7-688FE6382673}</Project>
-      <Name>Recommender.Core</Name>
+      <Project>{535512BD-FB46-424F-9A73-7C17D674E78C}</Project>
+      <Name>Recommender.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

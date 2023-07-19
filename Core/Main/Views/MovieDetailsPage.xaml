@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pages:StyledPage   xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:pages="clr-namespace:Recommender.Pages"
+                    xmlns:viewModels="clr-namespace:Recommender.ViewModels"
+                    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                    x:Class="Recommender.Pages.MovieDetailsPage"
+                    x:DataType="viewModels:MovieDetailsPageModel"
+                    BackgroundColor="{StaticResource AccentBackgroundColor}"
+                    Padding="0,0,0,45">
+
+    <ScrollView>
+        <StackLayout Padding="0,0,0,10">
+            <!--<StackLayout.Background>
+                <LinearGradientBrush StartPoint="0,0"
+                                        EndPoint="0,1">
+                    <GradientStop Color="{StaticResource PrimaryBackgroundColor}"
+                                    Offset="0.1" />
+                    <GradientStop Color="{StaticResource SecondaryBackgroundColor}"
+                                    Offset="1.0" />
+                </LinearGradientBrush>
+            </StackLayout.Background>-->
+            
+            <Grid CompressedLayout.IsHeadless="True">
+                <forms:CachedImage HeightRequest="500"
+                                   DownsampleToViewSize="True"
+                                   Source="{Binding MovieDetails.Image}"
+                                   Aspect="AspectFill" />
+
+                <Frame VerticalOptions="EndAndExpand"
+                       HorizontalOptions="Fill"
+                       CornerRadius="10"
+                       HasShadow="True"
+                       BackgroundColor="{StaticResource AccentBackgroundColor}"
+                       Padding="10,0"
+                       Margin="-5,0,-5,-5">
+
+                    <Grid RowDefinitions="Auto, Auto, Auto, Auto"
+                          ColumnDefinitions="*"
+                          RowSpacing="5"
+                          Padding="0,0,0,20">
+
+                        <Label Margin="10,10,10,0"
+                               FontSize="20"
+                               FontAttributes="Italic"
+                               TextColor="{StaticResource LightTextColor}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding MovieDetails.Title}" />
+                                    <Span Text=" (" />
+                                    <Span Text="{Binding MovieDetails.Year}" />
+                                    <Span Text=")" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Label Grid.Row="1"
+                               Margin="10,0"
+                               HorizontalOptions="Start"
+                               TextColor="#9C9696">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding MovieDetails.MainGenre}" />
+                                    <Span Text=" / " />
+                                    <Span Text="{Binding MovieDetails.AdditionalGenre}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                         <!--<ImageButton x:Name="rateButton"
+                                      Grid.Row="0"
+                                      Grid.RowSpan="3"
+                                      Margin="10"
+                                      BackgroundColor="LightGray" 
+                                      Source="not_seen.png"
+                                      Style="{StaticResource RateButton}"
+                                      HorizontalOptions="End"
+                                      VerticalOptions="Start"
+                                      Clicked="ImageButton_Clicked"/>-->
+
+                        <Label Grid.Row="3"
+                               Margin="10,10,10,0"
+                               Text="{Binding MovieDetails.Description}"
+                               TextColor="#9C9696" />
+                    </Grid>
+                </Frame>
+            </Grid>
+
+             <!--<Label Margin="20,20,20,0"
+                    FontSize="20"
+                    FontAttributes="Italic"
+                    Text="Director"
+                    TextColor="{StaticResource LightTextColor}"/>
+
+              <Label Margin="20,20,20,0"
+                    FontSize="20"
+                    FontAttributes="Italic"
+                    Text="Actors"
+                    TextColor="{StaticResource LightTextColor}"/>
+
+            <ScrollView Orientation="Horizontal" 
+                        HorizontalScrollBarVisibility="Never"
+                        Margin="0,5,0,0">
+                <StackLayout x:Name="actorsList" 
+                             Spacing="0"
+                             Orientation="Horizontal">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:PersonModel">
+                            <StackLayout Padding="5,0">
+                                <forms:CachedImage Source="http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcRdcWXvHCgo3L-0lPHXQyeg5Rl5GnKni1EvAalbQyLXrruaDpO1C_Z2O7uUyExA"
+                                                   HeightRequest="80"
+                                                   WidthRequest="80"
+                                                   HorizontalOptions="Start"
+                                                   DownsampleToViewSize="True">
+                                    <forms:CachedImage.Transformations>
+                                        <transformations:CircleTransformation BorderSize="1" BorderHexColor="#34C04E"/>
+                                    </forms:CachedImage.Transformations>
+                                </forms:CachedImage>
+                                
+                                <Label TextColor="#9C9696"
+                                       Margin="15,0"
+                                       Text="{Binding FullName}"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>-->
+
+              <Label Margin="20,10,20,0"
+                    FontSize="20"
+                    FontAttributes="Italic"
+                    Text="Трейлер"
+                    TextColor="{StaticResource LightTextColor}"/>
+
+            <Grid HeightRequest="300"
+                  Margin="0,5,0,20">
+                <MediaElement AutoPlay="False"
+                              ShowsPlaybackControls="True"
+                              Source="ms-appx:///video1597151024.mp4"
+                              Volume="0.5"
+                              IsLooping="False"
+                              Aspect="AspectFill"
+                              VerticalOptions="Fill"
+                              HorizontalOptions="Fill" />
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</pages:StyledPage>

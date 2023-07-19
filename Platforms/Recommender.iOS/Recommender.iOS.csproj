@@ -181,9 +181,9 @@
     <BundleResource Include="Resources\close.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Recommender\Recommender.csproj">
-      <Project>{3467DE0B-F71F-4F62-8C07-D2A9CA7965E2}</Project>
-      <Name>Recommender</Name>
+    <ProjectReference Include="..\..\Core\Main\Recommender.Main.csproj">
+      <Project>{260A2009-40CF-4F38-8F5D-6F68461376C6}</Project>
+      <Name>Recommender.Main</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
