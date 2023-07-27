@@ -25,3 +25,5 @@ bld/
 *.suo
 *.sln.ide
 *.dll.refresh
+Core/BussinesLogic/bin
+Core/BussinesLogic/obj

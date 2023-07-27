@@ -15,6 +15,11 @@
 
     <!-- Movie image -->
     <ffImageLoading:CachedImage Aspect="AspectFill"
+                                DownsampleToViewSize="True"
+                                FadeAnimationEnabled="True"
+                                BitmapOptimizations="True"
+                                LoadingPriority="High"
+                                DownsampleUseDipUnits="True"
                                 Source="{Binding ImageUrl, Source={x:Reference MovieCardName}}"/>
 
 

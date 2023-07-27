@@ -12,6 +12,7 @@ namespace Recommender.API
             FreshIOC.Container.Register(apiLoggingService);
 
             FreshIOC.Container.Register<IApiRepository, ApiRepository>();
+            FreshIOC.Container.Register<IHttpClientService, HttpClientService>();
         }
     }
 }

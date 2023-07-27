@@ -28,7 +28,9 @@
     <Folder Include="Views\Components\" />
     <Folder Include="Views\ItemTemplates\" />
     <Folder Include="Views\Layouts\" />
-    <Folder Include="Views\Auth\" />
+    <Folder Include="Views\Pages\" />
+    <Folder Include="Views\Pages\Auth\" />
+    <Folder Include="Views\Pages\Recommendations\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Bookos.ttf" />
@@ -38,10 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\Fonts\BOOKOS.TTF" />
-    <EmbeddedResource Update="Views\FavouriteMoviesPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Pages\OnboardingPage.xaml">
       <SubType>Designer</SubType>
       <Generator></Generator>
@@ -54,18 +52,6 @@
       <SubType>Designer</SubType>
       <Generator></Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProfilePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\RateMoviesPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\MovieDetailsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Localizations\en.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
@@ -75,6 +61,22 @@
       <LastGenOutput>AppResources.uk.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Remove="NLog.config" />
+    <EmbeddedResource Update="Views\Pages\FavouriteMoviesPage.xaml">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Pages\MovieDetailsPage.xaml">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Pages\ProfilePage.xaml">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Pages\RateMoviesPage.xaml">
+      <Generator></Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Views\Auth\ForgotPasswordPage.xaml.cs" />
+    <Compile Remove="Views\Pages\MoviesTabbedPage.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Pages\OnboardingPage.xaml.cs">
@@ -94,6 +96,38 @@
     </Compile>
     <Compile Update="Views\Components\ConfirmButton.xaml.cs">
       <DependentUpon>ConfirmButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Pages\Auth\LoginPage.xaml.cs">
+      <DependentUpon>..\..\Auth\LoginPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Pages\Auth\OnboardingPage.xaml.cs">
+      <DependentUpon>..\..\Auth\OnboardingPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Pages\Auth\SignUpPage.xaml.cs">
+      <DependentUpon>..\..\Auth\SignUpPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Pages\FavouriteMoviesPage.xaml.cs">
+      <DependentUpon>FavouriteMoviesPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Pages\MovieDetailsPage.xaml.cs">
+      <DependentUpon>MovieDetailsPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Pages\MoviesTabbedPage.xaml.cs">
+      <DependentUpon>MoviesTabbedPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Pages\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Pages\RateMoviesPage.xaml.cs">
+      <DependentUpon>RateMoviesPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

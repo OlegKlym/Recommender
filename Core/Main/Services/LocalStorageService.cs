@@ -9,13 +9,13 @@ namespace Recommender.Services
 {
     public class LocalStorageService : ILocalStorageService
     {
-        public async Task SaveNotSeenMoviesToLocalStorageAsync(IEnumerable<MovieModel> movies)
+        public async Task SaveMoviesToLocalStorageAsync(IEnumerable<MovieModel> movies)
         {
             var userData = JsonConvert.SerializeObject(movies);
             await SecureStorage.SetAsync("notSeenMovies", userData);
         }
 
-        public async Task<IResponseData<IEnumerable<MovieModel>>> GetNotSeenMoviesFromLocalStorageAsync()
+        public async Task<IResponseData<IEnumerable<MovieModel>>> GetMoviesFromLocalStorageAsync()
         {
             var serializedMovies = await SecureStorage.GetAsync("notSeenMovies");
             if (serializedMovies == null)

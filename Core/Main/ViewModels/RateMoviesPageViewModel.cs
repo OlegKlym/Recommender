@@ -137,7 +137,7 @@ namespace Recommender.ViewModels
                 RateMoviesAsync(_neutralMovies, Rate.Neutral),
                 RateMoviesAsync(_dislikedMovies, Rate.Dislike),
 
-                _localStorageService.SaveNotSeenMoviesToLocalStorageAsync(_notSeenMovies)
+                _localStorageService.SaveMoviesToLocalStorageAsync(_notSeenMovies)
             };
 
             await Task.WhenAll(tasks);

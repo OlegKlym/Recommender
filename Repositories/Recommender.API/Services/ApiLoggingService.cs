@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using Recommender.Core.Services;
+using Recommender.API.Models;
 
 namespace Recommender.API.Services
 {
@@ -18,6 +19,11 @@ namespace Recommender.API.Services
             _loggingService.Info(message);
         }
 
+        public void Error(string message)
+        {
+            _loggingService.Error(message);
+        }
+
         public void LogRequestInfo(Uri uri, HttpMethod httpMethod, string content)
         {
             _loggingService.Info($"[API] Requesting {httpMethod} of {uri} {content}");
@@ -27,6 +33,11 @@ namespace Recommender.API.Services
         {
             _loggingService.Info($"[API] Complete {uri}, was running for {elapsedTime}");
             _loggingService.Info($"[API] {(int)response.StatusCode}({response.StatusCode})| {uri} {responseContent}");
+        }
+
+        public void LogTimeoutInfo(TimeoutInfo timeoutInfo)
+        {
+            _loggingService.Info($"[API] Timeout occured for API: {timeoutInfo.Uri}, was running for {timeoutInfo.Timeout}");
         }
     }
 }

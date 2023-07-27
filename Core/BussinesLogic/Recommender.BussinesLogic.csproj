@@ -18,6 +18,7 @@
     <Folder Include="Mappers\" />
     <Folder Include="Resources\" />
     <Folder Include="Resources\Localizations\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Contracts\Recommender.Contracts.csproj" />

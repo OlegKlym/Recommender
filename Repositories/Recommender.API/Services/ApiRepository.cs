@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Recommender.Core.Models;
+using Recommender.API.Models;
 
 namespace Recommender.API.Services
 {
@@ -19,15 +18,17 @@ namespace Recommender.API.Services
 
     public class ApiRepository : IApiRepository
     {
+        private readonly int _timeoutDurationInSeconds = 60;
+
         private readonly ApiLoggingService _loggingService;
+        private readonly IHttpClientService _httpClientService;
 
-        public HttpClient HttpClient { get; }
-
-        public ApiRepository(ApiLoggingService loggingService)
+        public ApiRepository(
+            ApiLoggingService loggingService,
+            IHttpClientService httpClientService)
         {
-            HttpClient = new HttpClient();
-
             _loggingService = loggingService;
+            _httpClientService = httpClientService;
         }
 
         public Task<IResponseData<T>> MakePostRequest<T>(object request, string url, CancellationToken? cancellationToken = null)
@@ -75,7 +76,7 @@ namespace Recommender.API.Services
                 return uri;
             }
 
-            throw new ArgumentException("The argument '{0}' cannot be null or empty.", nameof(url));
+            throw new ArgumentException($"The argument '{nameof(url)}' cannot be null or empty.");
         }
 
         private async Task<IResponseData<T>> SendRequest<T>(
@@ -84,59 +85,63 @@ namespace Recommender.API.Services
             string content,
             CancellationToken? cancellationToken)
         {
-            if(HttpClient == null)
+            var request = new HttpRequestMessageFactory().CreateHttpRequestMessage(uri, httpMethod, content);
+
+            var timeoutInfo = new TimeoutInfo
             {
-                throw new ArgumentNullException(nameof(HttpClient));
+                Uri = uri,
+                Timeout = TimeSpan.FromSeconds(_timeoutDurationInSeconds)
+            };
+
+            HttpResponseMessage response;
+            var responseContent = string.Empty;
+
+            using (var timer = new ExecutionTimer())
+            {
+                _loggingService.LogRequestInfo(uri, httpMethod, content);
+
+                response = await ExecuteWithTimeoutAsync(request, timeoutInfo, cancellationToken);
+                responseContent = await GetResponseContent(response);
+
+                _loggingService.LogResponseInfo(uri, timer.Elapsed, response, responseContent);
             }
 
-            var request = CreateHttpRequestMessage(uri, httpMethod, content);
-
-            _loggingService.LogRequestInfo(uri, httpMethod, content);
-
-            var stopwatch = Stopwatch.StartNew();
-            var response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
-            var responseContent = await GetResponseContent(response).ConfigureAwait(false);
-            stopwatch.Stop();
-
-            _loggingService.LogResponseInfo(uri, stopwatch.Elapsed, response, responseContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return new ResponseData<T>
+            return response.IsSuccessStatusCode
+                ? new ResponseData<T>
                 {
                     StatusCode = (int)response.StatusCode,
                     Data = JsonConvert.DeserializeObject<T>(responseContent)
+                }
+                : new ResponseData<T>
+                {
+                    StatusCode = (int)response.StatusCode,
+                    ErrorMessage = response.ReasonPhrase
                 };
-            }
-
-            return new ResponseData<T>
-            {
-                StatusCode = (int)response.StatusCode,
-                ErrorMessage = response.ReasonPhrase
-            };
         }
 
-        private HttpRequestMessage CreateHttpRequestMessage(Uri uri, HttpMethod httpMethod, string content)
+        private async Task<HttpResponseMessage> ExecuteWithTimeoutAsync(HttpRequestMessage request, TimeoutInfo timeoutInfo, CancellationToken? cancellationToken)
         {
-            return new HttpRequestMessage(httpMethod, uri)
-            {
-                Content = new StringContent(content, Encoding.UTF8, "application/json")
-            };
+            return await _httpClientService
+                .ExecuteWithTimeoutAsync(SendHttpRequest(request, cancellationToken), timeoutInfo)
+                .ConfigureAwait(false);
         }
 
-        private async Task<HttpResponseMessage> SendHttpRequest(HttpRequestMessage request, CancellationToken? cancellationToken)
+        private Task<HttpResponseMessage> SendHttpRequest(HttpRequestMessage request, CancellationToken? cancellationToken)
         {
-            if (cancellationToken == null)
-            {
-                return await HttpClient.SendAsync(request).ConfigureAwait(false);
-            }
-
-            return await HttpClient.SendAsync(request, cancellationToken.Value).ConfigureAwait(false);
+            return _httpClientService.SendHttpRequest(request, cancellationToken);
         }
 
         private async Task<string> GetResponseContent(HttpResponseMessage response)
         {
-            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            try
+            {
+                return await _httpClientService.GetResponseContent(response).ConfigureAwait(false);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _loggingService.Error(ex.Message);
+                throw;
+            }
         }
     }
 }

@@ -17,6 +17,8 @@ using Recommender.BussinesLogic.UseCases;
 using Recommender.BussinesLogic.Resources.Localizations;
 
 using IServiceProvider = Recommender.Core.Services.IServiceProvider;
+using Recommender.Contracts.UseCases;
+using Recommender.BussinesLogic.Services;
 
 namespace Recommender
 {
@@ -83,9 +85,11 @@ namespace Recommender
             FreshIOC.Container.Register<IDialogService, DialogService>();
 
             FreshIOC.Container.Register<ILoginUseCase, LoginUseCase>();
+            FreshIOC.Container.Register<IRecommendedMoviesUseCase, RecommendedMoviesUseCase>();
 
             FreshIOC.Container.Register<IValidator<LoginPageModel>, LoginValidator>();
             FreshIOC.Container.Register<ILoaderDecorator, LoaderDecorator>();
+            FreshIOC.Container.Register<IMovieRecommendationProvider, MovieRecommendationProvider>();
 
             ApiContainerConfig.ConfigureDependencies();
         }

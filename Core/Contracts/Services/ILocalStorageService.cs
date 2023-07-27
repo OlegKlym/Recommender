@@ -6,7 +6,7 @@ namespace Recommender.Core.Services
 {
     public interface ILocalStorageService
     {
-        Task SaveNotSeenMoviesToLocalStorageAsync(IEnumerable<MovieModel> movies);
-        Task<IResponseData<IEnumerable<MovieModel>>> GetNotSeenMoviesFromLocalStorageAsync();
+        Task SaveMoviesToLocalStorageAsync(IEnumerable<MovieModel> movies);
+        Task<IResponseData<IEnumerable<MovieModel>>> GetMoviesFromLocalStorageAsync();
     }
 }

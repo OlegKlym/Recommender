@@ -1,18 +1,13 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Collections.Generic;
 using System.Threading;
 using Xamarin.Forms;
-using NLog;
 using Acr.UserDialogs;
 using PropertyChanged;
-using Recommender.Core.Models.Requests;
 using Recommender.Core.Models;
-using Recommender.Core.Services;
-
-using IServiceProvider = Recommender.Core.Services.IServiceProvider;
+using Recommender.Helpers;
+using Recommender.Contracts.UseCases;
 
 namespace Recommender.ViewModels
 {
@@ -23,25 +18,20 @@ namespace Recommender.ViewModels
     [AddINotifyPropertyChangedInterface]
     public class RecommendedMoviesPageModel : BasePageModel
     {
-        private readonly IMoviesService _moviesService;
-        private readonly ILocalStorageService _localStorageService;
-        private readonly IUsersService _usersService;
-
-        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+        private readonly IRecommendedMoviesUseCase _recommendedMoviesUseCase;
 
         private CancellationTokenSource _cancellationTokenSource;
-        private readonly int _timeoutDurationInSeconds = 30;
+
+        private bool _isRecommendationsLoading = false;
 
         public ObservableCollection<MovieModel> Recommendations { get; set; }
 
         public Command<MovieModel> OpenMovieDetailsCommand { get; }
         public Command RefreshMoviesCommand { get; }
 
-        public RecommendedMoviesPageModel(IServiceProvider serviceProvider)
+        public RecommendedMoviesPageModel(IRecommendedMoviesUseCase recommendedMoviesUseCase)
         {
-            _moviesService = serviceProvider.GetService<IMoviesService>();
-            _localStorageService = serviceProvider.GetService<ILocalStorageService>();
-            _usersService = serviceProvider.GetService<IUsersService>();
+            _recommendedMoviesUseCase = recommendedMoviesUseCase;
 
             OpenMovieDetailsCommand = new Command<MovieModel>(async movie => await ExecuteOpenMovieDetailsCommand(movie));
             RefreshMoviesCommand = new Command(async() => await ExecuteRefreshMoviesCommand());
@@ -51,9 +41,10 @@ namespace Recommender.ViewModels
         {
             base.ViewIsAppearing(sender, e);
 
-            if (Recommendations == null)
+            if (!_isRecommendationsLoading)
             {
-                Task.Run(() => LoadRecommendationsAsync());
+                _isRecommendationsLoading = true;
+                _ = LoadRecommendationsAsyncWithLoader();
             }
         }
 
@@ -74,90 +65,30 @@ namespace Recommender.ViewModels
             await CoreMethods.PushPageModel<MovieDetailsPageModel>(movie);
         }
 
-        private async Task LoadRecommendationsAsync()
+        private async Task LoadRecommendationsAsyncWithLoader()
         {
-            //var response = await _localStorageService.GetNotSeenMoviesFromLocalStorageAsync();
-
-            //// check if there already cached movies
-            //if (response.Data == null)
-            //{
-
-            _cancellationTokenSource = new CancellationTokenSource();
-
             try
             {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    UserDialogs.Instance.ShowLoading("Очікуйте");
-                });
-
-                var userData = await _usersService.GetUserFromStorageAsync();
-                if (userData == null)
-                {
-                    UserDialogs.Instance.HideLoading();
-
-                    await UserDialogs.Instance.AlertAsync("Помилка. Користувач не зареєстрований");
-                    return;
-                }
-
-                await LoadRecommendationsForUserAsync(userData);
+                await Task.Run(() => LoadRecommendationsAsync().WithLoaderAsync());
             }
-
-            catch (OperationCanceledException)
-            {
-                _logger.Error("APP_ERROR: Завантаження рекомендацій було скасовано.");
-            }
-
-            catch (TimeoutException)
-            {
-                _logger.Error("APP_ERROR: Завантаження рекомендацій зайняло забагато часу.");
-
-                await UserDialogs.Instance.AlertAsync("Завантаження рекомендацій зайняло забагато часу.");
-            }
-
-            catch (Exception ex)
-            {
-                _logger.Error($"APP_ERROR: Помилка завантаження рекомендацій: {ex.Message}");
-
-                await UserDialogs.Instance.AlertAsync("Не вдалося отримати рекомендації. Спробуй трохи пізніше");
-            }
-          
-            //}
-            //else
-            //{
-            //    Recommendations = new ObservableCollection<MovieModel>(response.Data);
-            //}
-
             finally
             {
-                UserDialogs.Instance.HideLoading();
+                _isRecommendationsLoading = false;
             }
         }
 
-        private async Task LoadRecommendationsForUserAsync(UserModel userData)
+        private async Task LoadRecommendationsAsync()
         {
-            var notSeenMovies = await ExecuteWithTimeoutAsync(ct => GetNotSeenMoviesAsync(userData, ct), _cancellationTokenSource.Token);
+            _cancellationTokenSource = new CancellationTokenSource();
 
-            Recommendations = new ObservableCollection<MovieModel>(notSeenMovies);
-        }
-
-        private async Task<IEnumerable<MovieModel>> GetNotSeenMoviesAsync(UserModel userData, CancellationToken cancellationToken)
-        {
-            var request = new GetRecommendationsRequest { UserId = userData.Id };
-
-            var response = await _moviesService.GetRecommendationsAsync(request, cancellationToken);
+            var response = await _recommendedMoviesUseCase.GetRecommendationsAsync(_cancellationTokenSource.Token);
             if (response.IsSuccessful)
             {
-                var recommendedMovies = response.Data?.RecommendedMovies?.Take(20)?.ToList() ?? new List<MovieModel>();
-
-                await _localStorageService.SaveNotSeenMoviesToLocalStorageAsync(recommendedMovies);
-
-                return recommendedMovies;
+                Recommendations = new ObservableCollection<MovieModel>(response.RecommendedMovies);
             }
             else
             {
-                await UserDialogs.Instance.AlertAsync("Не вдалося отримати рекомендації. Спробуй трохи пізніше");
-                throw new Exception(response.ErrorMessage);
+                await UserDialogs.Instance.AlertAsync(response.ErrorMessage);
             }
         }
 
@@ -167,21 +98,6 @@ namespace Recommender.ViewModels
             {
                 _cancellationTokenSource.Cancel();
             }
-        }
-
-        private async Task<T> ExecuteWithTimeoutAsync<T>(Func<CancellationToken, Task<T>> operation, CancellationToken cancellationToken)
-        {
-            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(_timeoutDurationInSeconds), cancellationToken);
-            var operationTask = operation(cancellationToken);
-
-            var completedTask = await Task.WhenAny(timeoutTask, operationTask);
-            if (completedTask == timeoutTask)
-            {
-                _cancellationTokenSource?.Cancel();
-                throw new TimeoutException();
-            }
-
-            return await operationTask;
         }
     }
 }
